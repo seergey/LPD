@@ -60,6 +60,7 @@ protected slots:
 
 private:
     QScopedPointer<D3D10GrabberImpl> m_impl;
+    void freeScreens();
 };
 
 #endif

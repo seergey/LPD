@@ -295,7 +295,7 @@ public:
                 copyMemDesc(m_memDesc);
                 ReleaseMutex(m_mutex);
             } else {
-                qWarning(Q_FUNC_INFO " couldn't start grabbing: ", errorcode);
+                qWarning() <<Q_FUNC_INFO << " couldn't start grabbing: " << errorcode;
             }
         }
     }
@@ -311,7 +311,7 @@ public:
                 copyMemDesc(m_memDesc);
                 ReleaseMutex(m_mutex);
             } else {
-                qWarning(Q_FUNC_INFO " couldn't stop grabbing: ", errorcode);
+                qWarning() << Q_FUNC_INFO << " couldn't stop grabbing: " << errorcode;
             }
         }
     }
@@ -327,7 +327,7 @@ public:
                 copyMemDesc(m_memDesc);
                 ReleaseMutex(m_mutex);
             } else {
-                qWarning(Q_FUNC_INFO " couldn't set grab interval: ", errorcode);
+                qWarning() << Q_FUNC_INFO << " couldn't set grab interval: " << errorcode;
             }
         }
     }
@@ -694,6 +694,12 @@ QList< ScreenInfo > * D3D10Grabber::screensWithWidgets(QList< ScreenInfo > * res
 bool D3D10Grabber::reallocate(const QList<ScreenInfo> &grabScreens)
 {
     Q_UNUSED(grabScreens);
+    GrabbedScreen grabbedScreen;
+    grabbedScreen.screenInfo.handle = reinterpret_cast<void *>(QApplication::desktop()->primaryScreen());
+    grabbedScreen.screenInfo.rect = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
+
+    _screensWithWidgets.clear();
+    _screensWithWidgets.append(grabbedScreen);
 
     DEBUG_HIGH_LEVEL << Q_FUNC_INFO << this->metaObject()->className();
     return true;
@@ -709,6 +715,10 @@ GrabResult D3D10Grabber::grabScreens()
         emit grabberStateChangeRequested(true);
         return GrabResultFrameNotReady;
     }
+}
+
+void D3D10Grabber::freeScreens(){
+
 }
 
 D3D10Grabber::~D3D10Grabber() {

@@ -32,7 +32,7 @@
 TEMPLATE = subdirs
 CONFIG += ordered
 
-include(build-config.prf)
+#include(build-config.prf)
 
 SUBDIRS = math grab
 
@@ -43,3 +43,4 @@ contains(QMAKE_TARGET.arch, x86_64) {
     hooks32.file = hooks/hooks32.pro
     unhook32.file = unhook/unhook32.pro
 }
+	

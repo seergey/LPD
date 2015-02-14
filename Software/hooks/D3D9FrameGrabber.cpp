@@ -4,7 +4,7 @@
 #include "hooksutils.h"
 #include "../common/msvcstub.h"
 #include <initguid.h>
-#include "d3d9types.h"
+
 #include "d3d9.h"
 
 #include "ProxyFuncJmpToVFTable.hpp"
@@ -529,9 +529,9 @@ HRESULT WINAPI D3D9Reset(IDirect3DDevice9* pDev, D3DPRESENT_PARAMETERS* pPresent
         // find the VFT in this process and use it in the future
         uintptr_t * pvtbl = *((uintptr_t**)(pDev));
         uintptr_t* presentFuncPtr = &pvtbl[D3D9_RESET_FUNC_ORD];
-        if (!d3d9FrameGrabber->m_d3d9ResetProxyFunc->switchToVFTHook((void**)presentFuncPtr, D3D9Reset)) {
-            logger->reportLogError(L"d3d9 failed to switch from jmp to vft proxy");
-        }
+//        if (!d3d9FrameGrabber->m_d3d9ResetProxyFunc->switchToVFTHook((void**)presentFuncPtr, D3D9Reset)) {
+//            logger->reportLogError(L"d3d9 failed to switch from jmp to vft proxy");
+//        }
     }
 
     D3D9ResetFunc orig = reinterpret_cast<D3D9ResetFunc>(d3d9FrameGrabber->m_d3d9ResetProxyFunc->getOriginalFunc());

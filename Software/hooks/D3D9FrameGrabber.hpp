@@ -3,7 +3,7 @@
 
 #include "GAPIProxyFrameGrabber.hpp"
 #include "LoggableTrait.hpp"
-
+#include "d3d9types.h"
 class Logger;
 class ProxyFuncJmp;
 class ProxyFuncJmpToVFTable;
