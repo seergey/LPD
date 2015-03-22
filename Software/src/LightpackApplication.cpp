@@ -725,7 +725,9 @@ void LightpackApplication::settingsChanged()
 void LightpackApplication::showLedWidgets(bool visible)
 {
     DEBUG_LOW_LEVEL << Q_FUNC_INFO << visible;
-    m_grabManager->setVisibleLedWidgets(visible);
+    if (m_grabManager != NULL) {
+        m_grabManager->setVisibleLedWidgets(visible);
+    }
 }
 
 void LightpackApplication::setColoredLedWidget(bool colored)
