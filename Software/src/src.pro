@@ -219,7 +219,9 @@ SOURCES += \
     wizard/CassiopeiaDistributor.cpp \
     wizard/PegasusDistributor.cpp \
     systrayicon/SysTrayIcon.cpp \
-    UpdatesProcessor.cpp
+    UpdatesProcessor.cpp \
+    settingswindownew.cpp \
+    animatecolorlabel.cpp
 
 HEADERS += \
     LightpackApplication.hpp \
@@ -273,7 +275,9 @@ HEADERS += \
     wizard/PegasusDistributor.hpp \
     systrayicon/SysTrayIcon.hpp \
     systrayicon/SysTrayIcon_p.hpp \
-    UpdatesProcessor.hpp
+    UpdatesProcessor.hpp \
+    settingswindownew.h \
+    animatecolorlabel.h
 
 !contains(DEFINES,UNITY_DESKTOP) {
     HEADERS += systrayicon/SysTrayIcon_qt_p.hpp
@@ -300,7 +304,8 @@ FORMS += SettingsWindow.ui \
     wizard/LightpackDiscoveryPage.ui \
     wizard/GrabAreaWidget.ui \
     wizard/ConfigureDevicePage.ui \
-    wizard/SelectDevicePage.ui
+    wizard/SelectDevicePage.ui \
+    settingswindownew.ui
 
 #
 # QtSingleApplication

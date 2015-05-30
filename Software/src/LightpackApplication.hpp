@@ -27,6 +27,7 @@
 #pragma once
 
 #include "SettingsWindow.hpp"
+#include "settingswindownew.h"
 #include "LedDeviceManager.hpp"
 #include "qtsingleapplication.h"
 #include "EndSessionDetector.hpp"

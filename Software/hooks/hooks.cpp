@@ -52,6 +52,7 @@ HOOKSDLL_API BOOL APIENTRY DllMain(HINSTANCE hModule, DWORD fdwReason, LPVOID lp
     {
         DxgiFrameGrabber *dxgiFrameGrabber = NULL;
         D3D9FrameGrabber *d3d9FrameGrabber = NULL;
+
 //        __asm__("int $3");
         // We don't need thread notifications for what we're doing.  Thus, get
         // rid of them, thereby eliminating some of the overhead of this DLL
@@ -118,6 +119,7 @@ HOOKSDLL_API BOOL APIENTRY DllMain(HINSTANCE hModule, DWORD fdwReason, LPVOID lp
                     gLog->reportLogInfo(L"dxgi hook has been installed successfully");
                 }
             }
+
         }
     } else if (fdwReason == DLL_PROCESS_DETACH) {
         if (gLog != NULL) {

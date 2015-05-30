@@ -61,7 +61,6 @@ SOURCES += \
     DxgiFrameGrabber.cpp \
     Logger.cpp \
     D3D9FrameGrabber.cpp
-
 HEADERS += \
     hooks.h \
     ../common/D3D10GrabberDefs.hpp \

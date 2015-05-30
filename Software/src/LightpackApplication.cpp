@@ -99,7 +99,8 @@ void LightpackApplication::initializeAll(const QString & appDirPath)
     if (!m_noGui)
     {
         bool trayAvailable = checkSystemTrayAvailability();
-
+        SettingsWindowNew* newWin = new SettingsWindowNew();
+        newWin->setVisible(true);
         m_settingsWindow = new SettingsWindow();
         if (trayAvailable) {
             m_settingsWindow->setVisible(false); /* Load to tray */
