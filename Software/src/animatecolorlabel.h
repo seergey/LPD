@@ -17,6 +17,7 @@ public:
     void mouseMoveEvent(QMouseEvent* ev);
     void leaveEvent(QEvent* );
     void paintEvent(QPaintEvent* ev);
+    void currentColorChanged(QColor color);
 
     bool isTop, isBottom;
     QColor* color = NULL;

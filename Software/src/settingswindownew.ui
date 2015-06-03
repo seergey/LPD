@@ -6,12 +6,33 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>439</width>
+    <width>506</width>
     <height>421</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QSlider::groove:horizontal {
+	height:2px;
+	background-color:gray
+}
+
+QSlider::handle:horizontal {
+    height: 10px;
+    background: #949494;
+	width:8px;
+    margin: -9px; 
+}
+
+QSlider::add-page {
+    background: #e9eced;
+}
+
+QSlider::sub-page {
+    background: #6baef7;
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="horizontalLayoutWidget">
@@ -20,49 +41,73 @@
       <x>10</x>
       <y>0</y>
       <width>488</width>
-      <height>80</height>
+      <height>82</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="TogglableCustomButton" name="shutdownButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>70</height>
+        </size>
+       </property>
        <property name="text">
         <string>Shutdown</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="commonSettingsButton">
        <property name="text">
         <string>Settings</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="TogglableCustomButton" name="grabbing_settings_button">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>70</height>
+        </size>
+       </property>
        <property name="text">
         <string>Screen capturing</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="TogglableCustomButton" name="backlightSettingsButton">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>70</height>
+        </size>
+       </property>
        <property name="text">
         <string>Backlighting</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox"/>
+      <widget class="QComboBox" name="profile_combobox"/>
      </item>
     </layout>
    </widget>
-   <widget class="QStackedWidget" name="stackedWidget">
+   <widget class="QStackedWidget" name="settingsWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>90</y>
-      <width>421</width>
+      <width>481</width>
       <height>321</height>
      </rect>
     </property>
@@ -82,9 +127,9 @@
      <number>1</number>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
-    <widget class="QWidget" name="page">
+    <widget class="QWidget" name="common_settings">
      <widget class="QPushButton" name="pushButton_6">
       <property name="geometry">
        <rect>
@@ -124,47 +169,47 @@
        <string>Minimum brightness</string>
       </property>
      </widget>
-     <widget class="QSlider" name="horizontalSlider_5">
+     <widget class="QSlider" name="general_brightness_slider">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>90</y>
-        <width>211</width>
-        <height>19</height>
+        <y>80</y>
+        <width>350</width>
+        <height>40</height>
        </rect>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QSlider" name="horizontalSlider_6">
+     <widget class="QSlider" name="minimum_brightness_slider">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>150</y>
-        <width>211</width>
-        <height>19</height>
+        <width>350</width>
+        <height>40</height>
        </rect>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBox_4">
+     <widget class="QSpinBox" name="general_brightness_spinbox">
       <property name="geometry">
        <rect>
-        <x>230</x>
+        <x>370</x>
         <y>90</y>
         <width>42</width>
         <height>22</height>
        </rect>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBox_5">
+     <widget class="QSpinBox" name="minimum_brightness_spinbox">
       <property name="geometry">
        <rect>
-        <x>230</x>
-        <y>150</y>
+        <x>370</x>
+        <y>160</y>
         <width>42</width>
         <height>22</height>
        </rect>
@@ -183,34 +228,47 @@
        <string>for</string>
       </property>
      </widget>
-     <widget class="QRadioButton" name="radioButton">
+     <widget class="QGroupBox" name="groupBox">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>180</y>
-        <width>191</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Min lumosity level</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="radioButton_2">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
+        <x>10</x>
         <y>200</y>
-        <width>201</width>
-        <height>20</height>
+        <width>261</width>
+        <height>80</height>
        </rect>
       </property>
-      <property name="text">
-       <string>Dead zone</string>
+      <property name="title">
+       <string>GroupBox</string>
       </property>
+      <widget class="QRadioButton" name="min_brightness_type_dead_zone">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>201</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Dead zone</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="min_brightness_type_lumosity">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>191</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Min lumosity level</string>
+       </property>
+      </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_3">
+    <widget class="QWidget" name="screen_capturing_settings">
      <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
@@ -263,7 +321,7 @@
        <string>Keep lights on after</string>
       </property>
      </widget>
-     <widget class="QSlider" name="horizontalSlider_2">
+     <widget class="QSlider" name="screen_capturing_frequency_slider">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -272,11 +330,23 @@
         <height>19</height>
        </rect>
       </property>
+      <property name="maximum">
+       <number>999</number>
+      </property>
+      <property name="singleStep">
+       <number>10</number>
+      </property>
+      <property name="pageStep">
+       <number>100</number>
+      </property>
+      <property name="value">
+       <number>50</number>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QSlider" name="horizontalSlider_3">
+     <widget class="QSlider" name="gamma_correction_slider">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -285,11 +355,26 @@
         <height>19</height>
        </rect>
       </property>
+      <property name="maximum">
+       <number>200</number>
+      </property>
+      <property name="singleStep">
+       <number>1</number>
+      </property>
+      <property name="pageStep">
+       <number>20</number>
+      </property>
+      <property name="value">
+       <number>20</number>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
+      <property name="tickInterval">
+       <number>100</number>
+      </property>
      </widget>
-     <widget class="QSlider" name="horizontalSlider_4">
+     <widget class="QSlider" name="smoothness_slider">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -302,27 +387,32 @@
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBox">
+     <widget class="QSpinBox" name="screen_capturing_frequency_spinbox">
       <property name="geometry">
        <rect>
         <x>220</x>
         <y>40</y>
-        <width>42</width>
+        <width>61</width>
         <height>22</height>
        </rect>
       </property>
-     </widget>
-     <widget class="QSpinBox" name="spinBox_2">
-      <property name="geometry">
-       <rect>
-        <x>220</x>
-        <y>120</y>
-        <width>42</width>
-        <height>22</height>
-       </rect>
+      <property name="suffix">
+       <string>ms</string>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>999</number>
+      </property>
+      <property name="singleStep">
+       <number>1</number>
+      </property>
+      <property name="value">
+       <number>50</number>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBox_3">
+     <widget class="QSpinBox" name="smoothness_spinbox">
       <property name="geometry">
        <rect>
         <x>220</x>
@@ -332,34 +422,53 @@
        </rect>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox_2">
+     <widget class="QCheckBox" name="keep_lights_on_after_lock_checkbox">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>240</y>
-        <width>81</width>
+        <width>111</width>
         <height>20</height>
        </rect>
       </property>
       <property name="text">
-       <string>CheckBox</string>
+       <string>Lock computer</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox_3">
+     <widget class="QCheckBox" name="keep_lights_on_after_exit_checkbox">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>270</y>
-        <width>81</width>
+        <width>111</width>
         <height>20</height>
        </rect>
       </property>
       <property name="text">
-       <string>CheckBox</string>
+       <string>Exit Prismatik</string>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="gamma_correction_spinbox">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>120</y>
+        <width>62</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <double>10.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.050000000000000</double>
+      </property>
+      <property name="value">
+       <double>1.000000000000000</double>
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_2">
+    <widget class="QWidget" name="backLight_settings">
      <widget class="QLabel" name="label_4">
       <property name="geometry">
        <rect>
@@ -373,7 +482,7 @@
        <string>Animation Speed</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox">
+     <widget class="QCheckBox" name="animate_check_box">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -392,13 +501,13 @@
        <string>Animate</string>
       </property>
      </widget>
-     <widget class="QSlider" name="horizontalSlider">
+     <widget class="QSlider" name="animation_speed_slider">
       <property name="geometry">
        <rect>
-        <x>29</x>
+        <x>30</x>
         <y>150</y>
-        <width>311</width>
-        <height>111</height>
+        <width>350</width>
+        <height>40</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -438,13 +547,13 @@ QSlider::sub-page {
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="AnimateColorLabel" name="label_3">
+     <widget class="AnimateColorLabel" name="animate_color_1">
       <property name="geometry">
        <rect>
         <x>20</x>
         <y>20</y>
-        <width>50</width>
-        <height>50</height>
+        <width>60</width>
+        <height>60</height>
        </rect>
       </property>
       <property name="palette">
@@ -583,13 +692,13 @@ QSlider::sub-page {
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_10">
+     <widget class="AnimateColorLabel" name="animate_color_2">
       <property name="geometry">
        <rect>
-        <x>90</x>
+        <x>100</x>
         <y>20</y>
-        <width>50</width>
-        <height>50</height>
+        <width>60</width>
+        <height>60</height>
        </rect>
       </property>
       <property name="palette">
@@ -728,13 +837,13 @@ QSlider::sub-page {
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_11">
+     <widget class="AnimateColorLabel" name="animate_color_3">
       <property name="geometry">
        <rect>
-        <x>160</x>
+        <x>180</x>
         <y>20</y>
-        <width>50</width>
-        <height>50</height>
+        <width>60</width>
+        <height>60</height>
        </rect>
       </property>
       <property name="palette">
@@ -873,13 +982,13 @@ QSlider::sub-page {
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_12">
+     <widget class="AnimateColorLabel" name="animate_color_4">
       <property name="geometry">
        <rect>
-        <x>223</x>
+        <x>260</x>
         <y>20</y>
-        <width>50</width>
-        <height>50</height>
+        <width>60</width>
+        <height>60</height>
        </rect>
       </property>
       <property name="palette">
@@ -1018,13 +1127,13 @@ QSlider::sub-page {
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_13">
+     <widget class="AnimateColorLabel" name="animate_color_5">
       <property name="geometry">
        <rect>
-        <x>290</x>
+        <x>340</x>
         <y>20</y>
-        <width>50</width>
-        <height>50</height>
+        <width>60</width>
+        <height>60</height>
        </rect>
       </property>
       <property name="palette">
@@ -1172,6 +1281,11 @@ QSlider::sub-page {
    <class>AnimateColorLabel</class>
    <extends>QLabel</extends>
    <header>animatecolorlabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TogglableCustomButton</class>
+   <extends>QPushButton</extends>
+   <header>togglablecustombutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
