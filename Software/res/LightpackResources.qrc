@@ -38,5 +38,7 @@
         <file>icons/Prismatik.png</file>
         <file>icons/Prismatik-pixmap.png</file>
         <file>text/cast.html</file>
+        <file>icons/settings_button_black.png</file>
+        <file>icons/settings_button_white.png</file>
     </qresource>
 </RCC>

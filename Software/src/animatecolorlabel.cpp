@@ -4,6 +4,7 @@
 #include <QPen>
 #include <QPaintEvent>
 #include <QImageWriter>
+#include <QColorDialog>
 
 
 AnimateColorLabel::AnimateColorLabel(QWidget *parent) : QLabel(parent)
@@ -18,9 +19,27 @@ AnimateColorLabel::~AnimateColorLabel()
 
 void AnimateColorLabel::mousePressEvent(QMouseEvent *ev)
 {
-    this->color = new QColor(Qt::red);
-    update();
+    QColorDialog * dialog = new QColorDialog(this);
+    dialog->setWindowFlags(Qt::Window
+                          | Qt::WindowStaysOnTopHint
+                          | Qt::CustomizeWindowHint
+                          | Qt::WindowCloseButtonHint);
+
+    QColor result = dialog->getColor(this->color==NULL ? Qt::white : *(this->color));
+    if (result.isValid()) {
+        delete this->color;
+        this->color = new QColor(result);
+        update();
+    }
+    delete dialog;
+
 }
+
+void AnimateColorLabel::currentColorChanged(QColor color)
+{
+    this->color = new QColor(color);
+}
+
 
 void AnimateColorLabel::mouseMoveEvent(QMouseEvent *ev)
 {
@@ -53,7 +72,7 @@ void AnimateColorLabel::paintEvent(QPaintEvent *ev)
         point1.setY(point1.y()/2+1);
         point2.setY(point2.y()/2+1);
         painter.drawLine(point1, point2);
-        QImage* image = new QImage(":/settings_button_black.png");
+        QImage* image = new QImage(":/icons/settings_button_black.png");
         painter.drawImage(20, 6, *image);
         delete image;
 
@@ -84,4 +103,5 @@ void AnimateColorLabel::paintEvent(QPaintEvent *ev)
     }
 
 }
+
 

@@ -1933,3 +1933,4 @@ void SettingsWindow::onKeepLightsAfterLock_Toggled(bool isEnabled)
 {
 	Settings::setKeepLightsOnAfterLock(isEnabled);
 }
+

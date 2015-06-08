@@ -221,7 +221,8 @@ SOURCES += \
     systrayicon/SysTrayIcon.cpp \
     UpdatesProcessor.cpp \
     settingswindownew.cpp \
-    animatecolorlabel.cpp
+    animatecolorlabel.cpp \
+    TogglableCustomButton.cpp
 
 HEADERS += \
     LightpackApplication.hpp \
@@ -277,7 +278,8 @@ HEADERS += \
     systrayicon/SysTrayIcon_p.hpp \
     UpdatesProcessor.hpp \
     settingswindownew.h \
-    animatecolorlabel.h
+    animatecolorlabel.h \
+    TogglableCustomButton.h
 
 !contains(DEFINES,UNITY_DESKTOP) {
     HEADERS += systrayicon/SysTrayIcon_qt_p.hpp
