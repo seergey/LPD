@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QSpinBox>
 #include <QSlider>
+#include "enums.hpp"
 
 namespace Ui {
 class SettingsWindowNew;
@@ -37,6 +38,9 @@ public slots:
     void setMode(int mode);
     void profileChanged(int profileId);
     void profileSaved(int profileId);
+signals:
+    void backlightStatusChanged(Backlight::Status);
+
 private:
     Ui::SettingsWindowNew *ui;
     void synchronizeValues(QSlider* slider, QSpinBox* spinBox, int newValue);

@@ -99,10 +99,10 @@ void LightpackApplication::initializeAll(const QString & appDirPath)
     if (!m_noGui)
     {
         bool trayAvailable = checkSystemTrayAvailability();
-        SettingsWindowNew* newWin = new SettingsWindowNew();
-        newWin->setVisible(true);
-        newWin->connectSignalSlots();
-        newWin->initWithDefaultValues();
+        m_settingsWindowNew = new SettingsWindowNew();
+        m_settingsWindowNew->setVisible(true);
+        m_settingsWindowNew->connectSignalSlots();
+        m_settingsWindowNew->initWithDefaultValues();
         m_settingsWindow = new SettingsWindow();
         if (trayAvailable) {
             m_settingsWindow->setVisible(false); /* Load to tray */
@@ -143,6 +143,7 @@ void LightpackApplication::initializeAll(const QString & appDirPath)
     if (!m_noGui)
     {
         connect(m_settingsWindow, SIGNAL(backlightStatusChanged(Backlight::Status)), this, SLOT(setStatusChanged(Backlight::Status)));
+        connect(m_settingsWindowNew, SIGNAL(backlightStatusChanged(Backlight::Status)), this, SLOT(setStatusChanged(Backlight::Status)));
         m_settingsWindow->startBacklight();
     }
 

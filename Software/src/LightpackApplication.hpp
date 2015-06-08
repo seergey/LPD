@@ -106,6 +106,7 @@ public:
 
 private:
     SettingsWindow *m_settingsWindow;
+    SettingsWindowNew* m_settingsWindowNew;
     ApiServer *m_apiServer;
     LedDeviceManager *m_ledDeviceManager;
     QThread *m_LedDeviceManagerThread;

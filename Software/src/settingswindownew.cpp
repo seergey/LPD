@@ -86,8 +86,8 @@ void SettingsWindowNew::showGrabbingSettings()
     ui->settingsWidget->setCurrentWidget(ui->screen_capturing_settings);
     if (!Settings::isBacklightEnabled()){
         Settings::setIsBacklightEnabled(true);
-        Settings::setLightpackMode(Lightpack::AmbilightMode);
     }
+    Settings::setLightpackMode(Lightpack::AmbilightMode);
     setMode(1);
 }
 
@@ -96,8 +96,8 @@ void SettingsWindowNew::showBacklightSettings()
     ui->settingsWidget->setCurrentWidget(ui->backLight_settings);
     if (!Settings::isBacklightEnabled()){
         Settings::setIsBacklightEnabled(true);
-        Settings::setLightpackMode(Lightpack::MoodLampMode);
     }
+    Settings::setLightpackMode(Lightpack::MoodLampMode);
     setMode(2);
 }
 
@@ -175,6 +175,7 @@ void SettingsWindowNew::setMode(int mode)
     ui->shutdownButton->setActiveMode(mode);
     ui->grabbing_settings_button->setActiveMode(mode);
     ui->backlightSettingsButton->setActiveMode(mode);
+    emit backlightStatusChanged(mode==0 ? Backlight::StatusOff : Backlight::StatusOn);
 
 }
 
