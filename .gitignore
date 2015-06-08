@@ -40,6 +40,7 @@ Software/tests/Profiles/*
 Software/tests/main.conf
 Doxyfile
 stuff/
+build-*/
 *.a
 *.o
 *.user
@@ -52,6 +53,8 @@ stuff/
 *.lss
 *.map
 *.sym
+*.Debug
+*.Release
 Software/dmg/contents
 build-vars.prf
 Makefile*
