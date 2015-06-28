@@ -5,6 +5,7 @@
 #include <QSpinBox>
 #include <QSlider>
 #include "enums.hpp"
+#include "Settings.hpp"
 
 namespace Ui {
 class SettingsWindowNew;
@@ -20,6 +21,8 @@ public:
 
     void connectSignalSlots();
     void initWithDefaultValues();
+    void createTrayIcon();
+
 
 public slots:
     void shutdown();
@@ -38,11 +41,26 @@ public slots:
     void setMode(int mode);
     void profileChanged(int profileId);
     void profileSaved(int profileId);
+
+private slots:
+    void onPostInit();
+    void quit();
+    void showSettings();
+    void toggleSettings();
+    void backlightOn();
+    void backlightOff();
+    void profileTraySwitch(const QString newProfileName);
+    void updateTrayAndActionStates();
+
 signals:
     void backlightStatusChanged(Backlight::Status);
+    void switchOffLeds();
 
 private:
     Ui::SettingsWindowNew *ui;
+    SysTrayIcon *m_trayIcon;
+    int m_backlightMode;
+
     void synchronizeValues(QSlider* slider, QSpinBox* spinBox, int newValue);
 
 };

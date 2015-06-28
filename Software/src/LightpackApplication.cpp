@@ -106,12 +106,12 @@ void LightpackApplication::initializeAll(const QString & appDirPath)
         m_settingsWindow = new SettingsWindow();
         if (trayAvailable) {
             m_settingsWindow->setVisible(false); /* Load to tray */
-            m_settingsWindow->createTrayIcon();
+            m_settingsWindowNew->createTrayIcon();
         }
         else
             m_settingsWindow->setVisible(true);
         m_settingsWindow->connectSignalsSlots();
-        connect(this, SIGNAL(postInitialization()), m_settingsWindow, SLOT(onPostInit()));
+        connect(this, SIGNAL(postInitialization()), m_settingsWindowNew, SLOT(onPostInit()));
 //        m_settingsWindow->profileSwitch(Settings::getCurrentProfileName());
         // Process messages from another instances in SettingsWindow
         connect(this, SIGNAL(messageReceived(QString)), m_settingsWindow, SLOT(processMessage(QString)));

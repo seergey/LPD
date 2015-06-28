@@ -36,6 +36,7 @@
 #include "../common/defs.h"
 #include "debug.h"
 #include "types.h"
+#include "systrayicon/SysTrayIcon.hpp"
 
 namespace SettingsScope
 {
@@ -201,6 +202,7 @@ public:
     static uint getLastReadUpdateId();
     static void setLastReadUpdateId(const uint updateId);
 
+
 private:        
     static int getValidDeviceRefreshDelay(int value);
     static int getValidDeviceBrightness(int value);
@@ -280,6 +282,7 @@ signals:
     void ledSizeChanged(int ledIndex, const QSize &size);
     void ledPositionChanged(int ledIndex, const QPoint &position);
     void ledEnabledChanged(int ledIndex, bool isEnabled);
+    void backlightStatusChanged(const Backlight::Status status);
 
 private:
     static QMutex m_mutex; // for thread-safe access to QSettings* variables
@@ -287,6 +290,7 @@ private:
     static QSettings * m_mainConfig;     // store last used profile name, locale and so on
     static QString m_applicationDirPath; // path to store app generated stuff
     static Settings *m_this;
+
     static QMap<SupportedDevices::DeviceType, QString> m_devicesTypeToNameMap;
     static QMap<SupportedDevices::DeviceType, QString> m_devicesTypeToKeyNumberOfLedsMap;
 };

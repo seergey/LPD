@@ -172,11 +172,11 @@ void SettingsWindowNew::setMode(int mode)
     // 0 - shutdown
     // 1 - grabbing
     // 2 - backlighting
+    m_backlightMode = mode;
     ui->shutdownButton->setActiveMode(mode);
     ui->grabbing_settings_button->setActiveMode(mode);
     ui->backlightSettingsButton->setActiveMode(mode);
     emit backlightStatusChanged(mode==0 ? Backlight::StatusOff : Backlight::StatusOn);
-
 }
 
 void SettingsWindowNew::profileChanged(int profileId)
@@ -186,6 +186,13 @@ void SettingsWindowNew::profileChanged(int profileId)
 
 void SettingsWindowNew::profileSaved(int profileId)
 {
+
+}
+
+void SettingsWindowNew::onPostInit()
+{
+    if (m_trayIcon)
+        m_trayIcon->checkUpdate();
 
 }
 
@@ -203,4 +210,112 @@ void SettingsWindowNew::synchronizeValues(QSlider* slider, QSpinBox* spinBox, in
     if (spinBox->value() != newValue){
         spinBox->setValue(newValue);
     }
+}
+
+void SettingsWindowNew::createTrayIcon()
+{
+    DEBUG_LOW_LEVEL << Q_FUNC_INFO;
+    m_trayIcon = new SysTrayIcon();
+    connect(m_trayIcon, SIGNAL(quit()), this, SLOT(quit()));
+    connect(m_trayIcon, SIGNAL(showSettings()), this, SLOT(showSettings()));
+    connect(m_trayIcon, SIGNAL(toggleSettings()), this, SLOT(toggleSettings()));
+    connect(m_trayIcon, SIGNAL(backlightOn()), this, SLOT(backlightOn()));
+    connect(m_trayIcon, SIGNAL(backlightOff()), this, SLOT(backlightOff()));
+    connect(m_trayIcon, SIGNAL(profileSwitched(QString)), this, SLOT(profileTraySwitch(QString)));
+
+    m_trayIcon->init();
+    connect(this, SIGNAL(backlightStatusChanged(Backlight::Status)), this, SLOT(updateTrayAndActionStates()));
+}
+
+void SettingsWindowNew::quit()
+{
+    if (!ui->keep_lights_on_after_exit_checkbox->isChecked())
+    {
+        // Process all currently pending signals (which may include updating the color signals)
+        QApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+        emit switchOffLeds();
+        QApplication::processEvents(QEventLoop::AllEvents, 1000);
+    }
+
+    DEBUG_LOW_LEVEL << Q_FUNC_INFO << "trayIcon->hide();";
+
+    if (m_trayIcon!=NULL) {
+        m_trayIcon->hide();
+    }
+
+    DEBUG_LOW_LEVEL << Q_FUNC_INFO << "QApplication::quit();";
+
+    QApplication::quit();
+}
+
+void SettingsWindowNew::showSettings()
+{
+
+}
+
+void SettingsWindowNew::toggleSettings()
+{
+
+}
+
+void SettingsWindowNew::backlightOn()
+{
+
+}
+
+void SettingsWindowNew::backlightOff()
+{
+
+}
+
+void SettingsWindowNew::profileTraySwitch(const QString newProfileName)
+{
+
+}
+
+void SettingsWindowNew::updateTrayAndActionStates()
+{
+    DEBUG_MID_LEVEL << Q_FUNC_INFO;
+
+    if (m_trayIcon== NULL) return;
+
+    switch (m_backlightMode)
+    {
+    case 1:
+    case 2:
+//        ui->pushButton_EnableDisableDevice->setIcon(QIcon(*m_pixmapCache["off16"]));
+//        ui->pushButton_EnableDisableDevice->setText("  " + tr("Turn lights OFF"));
+        m_trayIcon->setStatus(SysTrayIcon::StatusOn);
+//        if (m_deviceLockStatus == DeviceLocked::Api)
+//        {
+////            m_labelStatusIcon->setPixmap(*m_pixmapCache["lock16"]);
+//            if (m_trayIcon)
+//                m_trayIcon->setStatus(SysTrayIcon::StatusLockedByApi);
+//        } else
+//            if (m_deviceLockStatus == DeviceLocked::Plugin)
+//            {
+////                m_labelStatusIcon->setPixmap(*m_pixmapCache["lock16"]);
+//                if (m_trayIcon)
+//                    m_trayIcon->setStatus(SysTrayIcon::StatusLockedByPlugin, &m_deviceLockModule);
+//            } else {
+////                m_labelStatusIcon->setPixmap(*m_pixmapCache["on16"]);
+//                if (m_trayIcon)
+//                    m_trayIcon->setStatus(SysTrayIcon::StatusOn);
+//            }
+        break;
+
+    case 0:
+//        m_labelStatusIcon->setPixmap(*m_pixmapCache["off16"]);
+//        ui->pushButton_EnableDisableDevice->setIcon(QIcon(*m_pixmapCache["on16"]));
+//        ui->pushButton_EnableDisableDevice->setText("  " + tr("Turn lights ON"));
+        if (m_trayIcon)
+            m_trayIcon->setStatus(SysTrayIcon::StatusOff);
+        break;
+    default:
+        qWarning() << Q_FUNC_INFO << "m_backlightStatus = " << m_backlightMode;
+        break;
+    }
+//    if (m_trayIcon)
+//        m_labelStatusIcon->setToolTip(m_trayIcon->toolTip());
 }
