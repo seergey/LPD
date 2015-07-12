@@ -178,7 +178,11 @@ public:
     static bool isMoodLampLiquidMode();
     static void setMoodLampLiquidMode(bool isLiquidMode);
     static QColor getMoodLampColor();
-    static void setMoodLampColor(QColor color);
+    static void setMoodLampColor(QColor color,
+                                 QColor value2 = QColor(),
+                                 QColor value3 = QColor(),
+                                 QColor value4 = QColor(),
+                                 QColor value5 = QColor());
     static int getMoodLampSpeed();
     static void setMoodLampSpeed(int value);
 
@@ -274,7 +278,7 @@ signals:
     void dx1011GrabberEnabledChanged(const bool isEnabled);
     void lightpackModeChanged(const Lightpack::Mode mode);
     void moodLampLiquidModeChanged(bool isLiquidMode);
-    void moodLampColorChanged(const QColor color);
+    void moodLampColorChanged(const QColor* colors);
     void moodLampSpeedChanged(int value);
     void ledCoefRedChanged(int ledIndex, double value);
     void ledCoefGreenChanged(int ledIndex, double value);

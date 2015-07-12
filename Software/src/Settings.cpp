@@ -157,6 +157,10 @@ namespace MoodLamp
 {
 static const QString IsLiquidMode = "MoodLamp/LiquidMode";
 static const QString Color = "MoodLamp/Color";
+static const QString Color2 = "MoodLamp/Color2";
+static const QString Color3 = "MoodLamp/Color3";
+static const QString Color4 = "MoodLamp/Color4";
+static const QString Color5 = "MoodLamp/Color5";
 static const QString Speed = "MoodLamp/Speed";
 }
 // [Device]
@@ -1205,11 +1209,34 @@ QColor Settings::getMoodLampColor()
     return QColor(value(Profile::Key::MoodLamp::Color).toString());
 }
 
-void Settings::setMoodLampColor(QColor value)
+void Settings::setMoodLampColor(QColor value,
+                                QColor value2,
+                                QColor value3,
+                                QColor value4,
+                                QColor value5)
 {
     DEBUG_LOW_LEVEL << Q_FUNC_INFO << value.name();
     setValue(Profile::Key::MoodLamp::Color, value.name() );
-    m_this->moodLampColorChanged(value);
+    setValue(Profile::Key::MoodLamp::Color2, value2.name() );
+    setValue(Profile::Key::MoodLamp::Color3, value3.name() );
+    setValue(Profile::Key::MoodLamp::Color4, value4.name() );
+    setValue(Profile::Key::MoodLamp::Color5, value5.name() );
+    int numColors = 0;
+    QColor params[] = {value, value2, value3, value4, value5};
+    for (int i=0; i<5; i++){
+        if (params[i].isValid()){
+            numColors++;
+        }
+    }
+    int idx = 0;
+    QColor activeColors [numColors];
+    for (int i=0; i<5; i++){
+        if (params[i].isValid()){
+           activeColors[idx++] = params[i];
+        }
+    }
+
+    m_this->moodLampColorChanged(activeColors);
 }
 
 int Settings::getMoodLampSpeed()

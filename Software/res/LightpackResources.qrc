@@ -40,5 +40,9 @@
         <file>text/cast.html</file>
         <file>icons/settings_button_black.png</file>
         <file>icons/settings_button_white.png</file>
+        <file>icons/settings_icon_gray.png</file>
+        <file>icons/settings_icon_white.png</file>
+        <file>icons/shutdown_icon_gray.png</file>
+        <file>icons/shutdown_icon_white.png</file>
     </qresource>
 </RCC>

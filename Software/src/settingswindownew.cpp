@@ -1,6 +1,7 @@
 #include "settingswindownew.h"
 #include "ui_settingswindownew.h"
 #include "Settings.hpp"
+#include <QInputDialog>
 
 using namespace SettingsScope;
 
@@ -45,7 +46,10 @@ void SettingsWindowNew::connectSignalSlots()
 //    connect(ui->min_brightness_type_dead_zone, SIGNAL(toggled(bool)), this, SLOT(minimumBrightnessModeChanged(bool)));
     connect(ui->min_brightness_type_lumosity, SIGNAL(toggled(bool)), this, SLOT(minimumBrightnessModeChanged(bool)));
 
-    //    connect(ui->)
+    connect(ui->profile_combobox, SIGNAL(currentIndexChanged(int)), this, SLOT(profileChanged(int)));
+
+    connect(ui->animate_check_box, SIGNAL(stateChanged(int)), this, SLOT(animate(int)));
+    connect(ui->animation_speed_slider, SIGNAL(valueChanged(int)), this, SLOT(animateSpeedChanged(int)));
 }
 
 void SettingsWindowNew::initWithDefaultValues()
@@ -74,7 +78,28 @@ void SettingsWindowNew::initWithDefaultValues()
     ui->shutdownButton->setButtonMode(0);
     ui->grabbing_settings_button->setButtonMode(1);
     ui->backlightSettingsButton->setButtonMode(2);
+
+    if (Settings::isBacklightEnabled()){
+        if (Settings::getLightpackMode() == Lightpack::AmbilightMode){
+            ui->settingsWidget->setCurrentWidget(ui->screen_capturing_settings);
+
+            setMode(1);
+        } else if (Settings::getLightpackMode() == Lightpack::MoodLampMode){
+            ui->settingsWidget->setCurrentWidget(ui->backLight_settings);
+
+            setMode(2);
+        }
+    } else {
+        setMode(0);
+    }
+
+    ui->animate_check_box->setChecked(Settings::isMoodLampLiquidMode());
+    ui->animation_speed_slider->setValue(Settings::getMoodLampSpeed());
+
+    initProfilesCombo();
 }
+
+
 
 void SettingsWindowNew::showCommonSettings()
 {
@@ -179,15 +204,45 @@ void SettingsWindowNew::setMode(int mode)
     emit backlightStatusChanged(mode==0 ? Backlight::StatusOff : Backlight::StatusOn);
 }
 
-void SettingsWindowNew::profileChanged(int profileId)
+void SettingsWindowNew::profileChanged(int elementId)
 {
-
+    if (elementId > 2){
+        QString profileName = Settings::findAllProfiles().at(elementId - 3);
+        Settings::loadOrCreateProfile(profileName);
+        initWithDefaultValues();
+    } else {
+        if (elementId == 0) { // Create new Profile
+            QString newProfileName = QInputDialog::getText(this, tr("Please enter profile name"),
+                                                           tr("Profile name:"), QLineEdit::Normal);
+            Settings::loadOrCreateProfile(newProfileName);
+            initProfilesCombo();
+        } else if (elementId == 1) { // Delete current Profile
+            if (ui->profile_combobox->count() > 4){
+                Settings::removeCurrentProfile();
+                QString nextProfileName  = Settings::findAllProfiles().at(0);
+                Settings::loadOrCreateProfile(nextProfileName);
+                initWithDefaultValues();
+            }
+            initProfilesCombo();
+        }
+    }
 }
 
-void SettingsWindowNew::profileSaved(int profileId)
+void SettingsWindowNew::animate(int state)
 {
-
+    Settings::setMoodLampLiquidMode(state == 2);
 }
+
+void SettingsWindowNew::animateSpeedChanged(int value)
+{
+    Settings::setMoodLampSpeed(value);
+}
+
+void SettingsWindowNew::moodLampColorChanged()
+{
+    Settings::setMoodLampColor()
+}
+
 
 void SettingsWindowNew::onPostInit()
 {
@@ -210,6 +265,31 @@ void SettingsWindowNew::synchronizeValues(QSlider* slider, QSpinBox* spinBox, in
     if (spinBox->value() != newValue){
         spinBox->setValue(newValue);
     }
+}
+
+void SettingsWindowNew::initProfilesCombo()
+{
+    disconnect(ui->profile_combobox, SIGNAL(currentIndexChanged(int)), this, SLOT(profileChanged(int)));
+
+    ui->profile_combobox->clear();
+
+    QStringList profilesList = Settings::findAllProfiles();
+    ui->profile_combobox->addItem("Create new Profile");
+    ui->profile_combobox->addItem("Delete current Profile");
+    ui->profile_combobox->insertSeparator(2);
+    for (int i = 0; i < profilesList.count(); i++)
+    {
+        if (ui->profile_combobox->findText(profilesList.at(i)) == -1) {
+            ui->profile_combobox->addItem(profilesList.at(i));
+        }
+    }
+    int idx = ui->profile_combobox->findText(Settings::getCurrentProfileName());
+    if (idx < 0){
+        idx = 2;
+    }
+    ui->profile_combobox->setCurrentIndex(idx);
+    connect(ui->profile_combobox, SIGNAL(currentIndexChanged(int)), this, SLOT(profileChanged(int)));
+
 }
 
 void SettingsWindowNew::createTrayIcon()

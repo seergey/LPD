@@ -101,8 +101,8 @@ void LightpackApplication::initializeAll(const QString & appDirPath)
         bool trayAvailable = checkSystemTrayAvailability();
         m_settingsWindowNew = new SettingsWindowNew();
         m_settingsWindowNew->setVisible(true);
-        m_settingsWindowNew->connectSignalSlots();
         m_settingsWindowNew->initWithDefaultValues();
+        m_settingsWindowNew->connectSignalSlots();
         m_settingsWindow = new SettingsWindow();
         if (trayAvailable) {
             m_settingsWindow->setVisible(false); /* Load to tray */

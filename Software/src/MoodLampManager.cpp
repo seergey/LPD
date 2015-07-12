@@ -31,13 +31,13 @@
 
 using namespace SettingsScope;
 
-int MoodLampManager::m_checkColors[MoodLampManager::ColorsMoodLampCount];
-const QColor MoodLampManager::m_colorsMoodLamp[MoodLampManager::ColorsMoodLampCount] =
-{
-    Qt::white, Qt::black, Qt::red, Qt::yellow, Qt::green, Qt::blue, Qt::magenta, Qt::cyan,
-    Qt::darkRed, Qt::darkGreen, Qt::darkBlue, Qt::darkYellow,
-    qRgb(255,128,0), qRgb(128,255,255), qRgb(128,0,255)
-};
+//int MoodLampManager::m_checkColors[MoodLampManager::ColorsMoodLampCount];
+//const QColor MoodLampManager::m_colorsMoodLamp[MoodLampManager::ColorsMoodLampCount] =
+//{
+//    Qt::white, Qt::black, Qt::red, Qt::yellow, Qt::green, Qt::blue, Qt::magenta, Qt::cyan,
+//    Qt::darkRed, Qt::darkGreen, Qt::darkBlue, Qt::darkYellow,
+//    qRgb(255,128,0), qRgb(128,255,255), qRgb(128,0,255)
+//};
 
 MoodLampManager::MoodLampManager(QObject *parent) : QObject(parent)
 {
@@ -72,15 +72,16 @@ void MoodLampManager::start(bool isEnabled)
         m_timer.stop();
 }
 
-void MoodLampManager::setCurrentColor(QColor color)
+void MoodLampManager::setCurrentColors(int colorCount, QColor* colors)
 {
-    DEBUG_MID_LEVEL << Q_FUNC_INFO << color;
+    DEBUG_MID_LEVEL << Q_FUNC_INFO << colorCount;
 
-    m_currentColor = color;
+    m_colorsMoodLamp = colors;
+    m_colorsMoodLampCount = colorCount;
 
-    if (m_isMoodLampEnabled && (m_isLiquidMode == false))
+    if (m_isMoodLampEnabled && (m_isLiquidMode == false) && colorCount > 0)
     {
-        fillColors(color.rgb());
+        fillColors(colors[0].rgb());
         emit updateLedsColors(m_colors);
     }
 }
@@ -116,7 +117,7 @@ void MoodLampManager::setNumberOfLeds(int numberOfLeds)
     DEBUG_LOW_LEVEL << Q_FUNC_INFO << numberOfLeds;
 
     initColors(numberOfLeds);
-    setCurrentColor(m_rgbSaved);
+    setCurrentColors(m_rgbSaved);
 }
 
 void MoodLampManager::reset()
@@ -205,7 +206,7 @@ QColor MoodLampManager::generateColor()
 
     if (unselectedColors.empty())
     {
-        for (int i = 0; i < ColorsMoodLampCount; i++)
+        for (int i = 0; i < m_colorsMoodLampCount; i++)
             unselectedColors << m_colorsMoodLamp[i];
     }
 

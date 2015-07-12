@@ -24,7 +24,7 @@ public:
     void createTrayIcon();
 
 
-public slots:
+private slots:
     void shutdown();
     void showCommonSettings();
     void showGrabbingSettings();
@@ -40,9 +40,9 @@ public slots:
     void keepLightsOnAfterLock(int state);
     void setMode(int mode);
     void profileChanged(int profileId);
-    void profileSaved(int profileId);
-
-private slots:
+    void animate(int state);
+    void animateSpeedChanged(int value);
+    void moodLampColorChanged();
     void onPostInit();
     void quit();
     void showSettings();
@@ -62,6 +62,7 @@ private:
     int m_backlightMode;
 
     void synchronizeValues(QSlider* slider, QSpinBox* spinBox, int newValue);
+    void initProfilesCombo();
 
 };
 
