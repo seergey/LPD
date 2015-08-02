@@ -50,6 +50,12 @@ void SettingsWindowNew::connectSignalSlots()
 
     connect(ui->animate_check_box, SIGNAL(stateChanged(int)), this, SLOT(animate(int)));
     connect(ui->animation_speed_slider, SIGNAL(valueChanged(int)), this, SLOT(animateSpeedChanged(int)));
+    connect(ui->animate_color_1, SIGNAL(Color_Changed(QColor)), this, SLOT(moodLampColorChanged()));
+    connect(ui->animate_color_2, SIGNAL(Color_Changed(QColor)), this, SLOT(moodLampColorChanged()));
+    connect(ui->animate_color_3, SIGNAL(Color_Changed(QColor)), this, SLOT(moodLampColorChanged()));
+    connect(ui->animate_color_4, SIGNAL(Color_Changed(QColor)), this, SLOT(moodLampColorChanged()));
+    connect(ui->animate_color_5, SIGNAL(Color_Changed(QColor)), this, SLOT(moodLampColorChanged()));
+
 }
 
 void SettingsWindowNew::initWithDefaultValues()
@@ -95,6 +101,11 @@ void SettingsWindowNew::initWithDefaultValues()
 
     ui->animate_check_box->setChecked(Settings::isMoodLampLiquidMode());
     ui->animation_speed_slider->setValue(Settings::getMoodLampSpeed());
+    ui->animate_color_1->setColor(Settings::getMoodLampColor1());
+    ui->animate_color_2->setColor(Settings::getMoodLampColor2());
+    ui->animate_color_3->setColor(Settings::getMoodLampColor3());
+    ui->animate_color_4->setColor(Settings::getMoodLampColor4());
+    ui->animate_color_5->setColor(Settings::getMoodLampColor5());
 
     initProfilesCombo();
 }
@@ -103,6 +114,7 @@ void SettingsWindowNew::initWithDefaultValues()
 
 void SettingsWindowNew::showCommonSettings()
 {
+    ui->commonSettingsButton->setIcon(QIcon(":/icons/settings_icon_white.png"));
     ui->settingsWidget->setCurrentWidget(ui->common_settings);
 }
 
@@ -194,6 +206,7 @@ void SettingsWindowNew::keepLightsOnAfterLock(int state)
 
 void SettingsWindowNew::setMode(int mode)
 {
+    ui->commonSettingsButton->setIcon(QIcon(":/icons/settings_icon_gray.png"));
     // 0 - shutdown
     // 1 - grabbing
     // 2 - backlighting
@@ -240,7 +253,12 @@ void SettingsWindowNew::animateSpeedChanged(int value)
 
 void SettingsWindowNew::moodLampColorChanged()
 {
-    Settings::setMoodLampColor()
+    Settings::setMoodLampColor(ui->animate_color_1->getColor(),
+                               ui->animate_color_2->getColor(),
+                               ui->animate_color_3->getColor(),
+                               ui->animate_color_4->getColor(),
+                               ui->animate_color_5->getColor()
+                               );
 }
 
 

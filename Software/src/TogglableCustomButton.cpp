@@ -16,13 +16,22 @@ void TogglableCustomButton::setButtonMode(int mode)
 void TogglableCustomButton::setActiveMode(int mode)
 {
     this->activeMode = mode;
-    if (this->activeMode == this->buttonMode){
-        this->setProperty("selectedOption", true);
+
+    if (this->buttonMode == 0) {
+        if (this->activeMode == this->buttonMode){
+            this->setIcon(QIcon(":/icons/shutdown_icon_white.png"));
+        } else {
+            this->setIcon(QIcon(":/icons/shutdown_icon_gray.png"));
+        }
     } else {
-        this->setProperty("selectedOption", false);
+        if (this->activeMode == this->buttonMode){
+            this->setProperty("selectedOption", true);
+        } else {
+            this->setProperty("selectedOption", false);
+        }
+        this->style()->unpolish(this);
+        this->style()->polish(this);
     }
-    this->style()->unpolish(this);
-    this->style()->polish(this);
     update();
 }
 

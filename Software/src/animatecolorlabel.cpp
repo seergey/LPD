@@ -5,6 +5,9 @@
 #include <QPaintEvent>
 #include <QImageWriter>
 #include <QColorDialog>
+#include "Settings.hpp"
+
+using namespace SettingsScope;
 
 
 AnimateColorLabel::AnimateColorLabel(QWidget *parent) : QLabel(parent)
@@ -19,25 +22,37 @@ AnimateColorLabel::~AnimateColorLabel()
 
 void AnimateColorLabel::mousePressEvent(QMouseEvent *ev)
 {
-    QColorDialog * dialog = new QColorDialog(this);
-    dialog->setWindowFlags(Qt::Window
-                          | Qt::WindowStaysOnTopHint
-                          | Qt::CustomizeWindowHint
-                          | Qt::WindowCloseButtonHint);
+    if (ev->y() <= 30 || !Settings::isMoodlampColor(this->color)){
+        QColorDialog * dialog = new QColorDialog(this);
+        dialog->setWindowFlags(Qt::Window
+                              | Qt::WindowStaysOnTopHint
+                              | Qt::CustomizeWindowHint
+                              | Qt::WindowCloseButtonHint);
 
-    QColor result = dialog->getColor(this->color==NULL ? Qt::white : *(this->color));
-    if (result.isValid()) {
-        delete this->color;
-        this->color = new QColor(result);
+        QColor result = dialog->getColor(this->color);
+        currentColorChanged(result);
+        update();
+        delete dialog;
+    } else {
+        currentColorChanged(QColor());
         update();
     }
-    delete dialog;
-
 }
 
 void AnimateColorLabel::currentColorChanged(QColor color)
 {
-    this->color = new QColor(color);
+    this->color = color;
+    emit Color_Changed(color);
+}
+
+QColor AnimateColorLabel::getColor()
+{
+    return this->color;
+}
+
+void AnimateColorLabel::setColor(QColor newColor)
+{
+    this->color = newColor;
 }
 
 
@@ -54,7 +69,7 @@ void AnimateColorLabel::leaveEvent(QEvent *)
 void AnimateColorLabel::paintEvent(QPaintEvent *ev)
 {
     QLabel::paintEvent(ev);
-    if (color != NULL) {
+    if (Settings::isMoodlampColor(this->color)) {
     QPainter painter(this);
 //    painter.setPen(QPen(Qt::red,2, Qt::SolidLine, Qt::FlatCap));
     QRect rect  = ev->rect();
@@ -62,7 +77,7 @@ void AnimateColorLabel::paintEvent(QPaintEvent *ev)
     rect.setTop(rect.top()+1);
     rect.setLeft(rect.left()+1);
     rect.setRight(rect.right()-1);
-    QBrush brush = QBrush(*color);
+    QBrush brush = QBrush(this->color);
     painter.fillRect(rect, brush);
     QList<QByteArray> array = QImageWriter::supportedImageFormats();
     if (isTop || isBottom) {

@@ -44,11 +44,12 @@ MoodLampManager::MoodLampManager(QObject *parent) : QObject(parent)
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
     m_isMoodLampEnabled = false;
-    m_rgbSaved = 0;
+//    m_rgbSaved = 0;
 
     m_isLiquidMode = Settings::isMoodLampLiquidMode();
     m_liquidModeSpeed = Settings::getMoodLampSpeed();
-    m_currentColor = Settings::getMoodLampColor();
+    m_colorsMoodLamp = Settings::getMoodLampColors();
+    m_colorsMoodLampCount = Settings::getMoodLampColorsCount();
 
     m_isSendDataOnlyIfColorsChanged = Settings::isSendDataOnlyIfColorsChanges();
 
@@ -65,23 +66,23 @@ void MoodLampManager::start(bool isEnabled)
     {
         // Clear saved color for force emit signal after check m_rgbSaved != rgb in updateColors()
         // This is usable if start is called after API unlock, and we should force set current color
-        m_rgbSaved = 0;
+//        m_rgbSaved = 0;
         updateColors();
     }
     else
         m_timer.stop();
 }
 
-void MoodLampManager::setCurrentColors(int colorCount, QColor* colors)
+void MoodLampManager::moodLampColorsChanged()
 {
-    DEBUG_MID_LEVEL << Q_FUNC_INFO << colorCount;
+    DEBUG_MID_LEVEL << Q_FUNC_INFO;
 
-    m_colorsMoodLamp = colors;
-    m_colorsMoodLampCount = colorCount;
+    m_colorsMoodLamp = Settings::getMoodLampColors();
+    m_colorsMoodLampCount = Settings::getMoodLampColorsCount();
 
-    if (m_isMoodLampEnabled && (m_isLiquidMode == false) && colorCount > 0)
+    if (m_isMoodLampEnabled && (m_isLiquidMode == false) && m_colorsMoodLampCount > 0)
     {
-        fillColors(colors[0].rgb());
+        fillColors(m_colorsMoodLamp[0].rgb());
         emit updateLedsColors(m_colors);
     }
 }
@@ -117,12 +118,12 @@ void MoodLampManager::setNumberOfLeds(int numberOfLeds)
     DEBUG_LOW_LEVEL << Q_FUNC_INFO << numberOfLeds;
 
     initColors(numberOfLeds);
-    setCurrentColors(m_rgbSaved);
+    moodLampColorsChanged();
 }
 
 void MoodLampManager::reset()
 {
-    m_rgbSaved = 0;
+//    m_rgbSaved = 0;
 }
 
 void MoodLampManager::settingsProfileChanged(const QString &profileName)
@@ -135,7 +136,7 @@ void MoodLampManager::settingsProfileChanged(const QString &profileName)
 void MoodLampManager::initFromSettings()
 {
     m_liquidModeSpeed = Settings::getMoodLampSpeed();
-    m_currentColor = Settings::getMoodLampColor();
+    m_colorsMoodLamp = Settings::getMoodLampColors();
     setLiquidMode(Settings::isMoodLampLiquidMode());
     m_isSendDataOnlyIfColorsChanged = Settings::isSendDataOnlyIfColorsChanges();
 
@@ -148,7 +149,7 @@ void MoodLampManager::updateColors()
 
     QRgb rgb;
 
-    if (m_isLiquidMode)
+    if (m_isLiquidMode && m_colorsMoodLampCount > 1)
     {
         static int red   = 0;
         static int green = 0;
@@ -178,21 +179,22 @@ void MoodLampManager::updateColors()
     }
     else
     {
-        rgb = m_currentColor.rgb();
+        if (m_colorsMoodLampCount > 0)
+            rgb = m_colorsMoodLamp[0].rgb();
     }
 
-    if (m_rgbSaved != rgb || m_isSendDataOnlyIfColorsChanged == false)
-    {
+//    if (m_isSendDataOnlyIfColorsChanged == false)
+//    {
         fillColors(rgb);
         emit updateLedsColors(m_colors);
-    }
+//    }
 
-    if (m_isMoodLampEnabled && m_isLiquidMode)
+    if (m_isMoodLampEnabled && m_isLiquidMode && m_colorsMoodLampCount > 1)
     {
         m_timer.start(m_delay);
     }
 
-    m_rgbSaved = rgb;
+//    m_rgbSaved = rgb;
 }
 
 int MoodLampManager::generateDelay(int speed)
@@ -202,6 +204,13 @@ int MoodLampManager::generateDelay(int speed)
 
 QColor MoodLampManager::generateColor()
 {
+    if (m_colorsMoodLampCount == 0){
+        return QColor();
+    }
+    if (m_colorsMoodLampCount == 1){
+        return m_colorsMoodLamp[0];
+    }
+
     static QList<QColor> unselectedColors;
 
     if (unselectedColors.empty())
@@ -212,7 +221,12 @@ QColor MoodLampManager::generateColor()
 
     int randIndex = PrismatikMath::rand(unselectedColors.size());
 
-    return unselectedColors.takeAt(randIndex);
+
+    QColor newColor = unselectedColors.takeAt(randIndex);
+
+    DEBUG_LOW_LEVEL << Q_FUNC_INFO << newColor.name();
+
+    return newColor;
 }
 
 void MoodLampManager::initColors(int numberOfLeds)

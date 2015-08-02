@@ -1584,7 +1584,7 @@ void SettingsWindow::updateUiFromSettings()
     // Check the selected moodlamp mode (setChecked(false) not working to select another)
     ui->radioButton_ConstantColorMoodLampMode->setChecked            (!Settings::isMoodLampLiquidMode());
     ui->radioButton_LiquidColorMoodLampMode->setChecked              (Settings::isMoodLampLiquidMode());
-    ui->pushButton_SelectColor->setColor                             (Settings::getMoodLampColor());
+    ui->pushButton_SelectColor->setColor                             (Settings::getMoodLampColors()[0]);
     ui->horizontalSlider_MoodLampSpeed->setValue                     (Settings::getMoodLampSpeed());
 
     ui->horizontalSlider_DeviceRefreshDelay->setValue                (Settings::getDeviceRefreshDelay());

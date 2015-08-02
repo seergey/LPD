@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>728</width>
-    <height>525</height>
+    <width>711</width>
+    <height>451</height>
    </rect>
   </property>
   <property name="font">
@@ -32,7 +32,7 @@ QSlider::handle:horizontal {
     height: 10px;
     background: #949494;
 	width:8px;
-    margin: -9px; 
+    margin: -10px 0px; 
 }	
 
 QSlider::add-page {
@@ -44,17 +44,19 @@ QSlider::sub-page {
 	color:white;
 }
 
-TogglableCustomButton, QPushButton#commonSettingsButton {
-	background-color:#2e3538;
+TogglableCustomButton{
+	background-color:#262c2f;
 	color: #899298;
    border:none;
 }
-*[selectedOption=&quot;true&quot;]{
+TogglableCustomButton:hover{
 	background-color:#3e484c;
+}
+TogglableCustomButton[selectedOption=&quot;true&quot;]{
 	color:white;
 }
 QMainWindow{
-	background-color:#2e3538;
+	background-color:#262c2f;
 }
 
 *{
@@ -65,9 +67,9 @@ QMainWindow{
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>715</width>
+      <x>0</x>
+      <y>0</y>
+      <width>711</width>
       <height>451</height>
      </rect>
     </property>
@@ -79,21 +81,21 @@ QMainWindow{
       <enum>QLayout::SetMaximumSize</enum>
      </property>
      <property name="leftMargin">
-      <number>20</number>
+      <number>0</number>
      </property>
      <property name="topMargin">
-      <number>20</number>
+      <number>0</number>
      </property>
      <property name="rightMargin">
-      <number>20</number>
+      <number>0</number>
      </property>
      <property name="bottomMargin">
-      <number>20</number>
+      <number>0</number>
      </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
-        <number>0</number>
+        <number>3</number>
        </property>
        <item>
         <widget class="TogglableCustomButton" name="shutdownButton">
@@ -125,7 +127,15 @@ QMainWindow{
           <bool>false</bool>
          </property>
          <property name="styleSheet">
-          <string notr="true"/>
+          <string notr="true">TogglableCustomButton{
+	background-color:#2e3538;
+	color: #899298;
+   border:none;
+}
+TogglableCustomButton:hover{
+	background-color:#3e484c;
+	color:white;
+}</string>
          </property>
          <property name="text">
           <string/>
@@ -159,12 +169,25 @@ QMainWindow{
            <height>70</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">*{
+	background-color:#2e3538;
+	color: #899298;
+   border:none;
+}
+:hover{
+	background-color:#3e484c;
+	color:white;
+}
+</string>
+         </property>
          <property name="text">
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../res/LightpackResources.qrc">
-           <normaloff>:/icons/settings_icon_gray.png</normaloff>:/icons/settings_icon_gray.png</iconset>
+          <iconset>
+           <normalon>:/icons/settings_icon_gray.png</normalon>
+          </iconset>
          </property>
         </widget>
        </item>
@@ -279,7 +302,7 @@ QMainWindow{
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="common_settings">
         <widget class="QPushButton" name="pushButton_6">
@@ -287,9 +310,23 @@ QMainWindow{
           <rect>
            <x>10</x>
            <y>10</y>
-           <width>131</width>
-           <height>28</height>
+           <width>191</width>
+           <height>41</height>
           </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{ 
+color:white;
+border: 0;
+background-color:#478fde;
+}
+QPushButton:focus:pressed  { 
+background-color:#98c9ff;
+ }
+QPushButton:hover{ 
+background-color: #6baef7; 
+
+}</string>
          </property>
          <property name="text">
           <string>Setup widgets</string>
@@ -419,16 +456,6 @@ QMainWindow{
           </property>
          </widget>
         </widget>
-        <zorder>pushButton_6</zorder>
-        <zorder>label</zorder>
-        <zorder>label_8</zorder>
-        <zorder>general_brightness_slider</zorder>
-        <zorder>minimum_brightness_slider</zorder>
-        <zorder>general_brightness_spinbox</zorder>
-        <zorder>minimum_brightness_spinbox</zorder>
-        <zorder>label_9</zorder>
-        <zorder>groupBox</zorder>
-        <zorder>horizontalLayoutWidget</zorder>
        </widget>
        <widget class="QWidget" name="screen_capturing_settings">
         <widget class="QLabel" name="label_2">
@@ -668,45 +695,36 @@ QMainWindow{
           <rect>
            <x>30</x>
            <y>150</y>
-           <width>401</width>
-           <height>40</height>
+           <width>371</width>
+           <height>31</height>
           </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="mouseTracking">
+          <bool>true</bool>
          </property>
          <property name="autoFillBackground">
           <bool>false</bool>
          </property>
          <property name="styleSheet">
-          <string notr="true">QSlider::groove:horizontal {
-	height:2px;
-	background-color:gray
-}
-
-QSlider::handle:horizontal {
-    height: 10px;
-    background: #949494;
-	width:8px;
-    margin: -9px; 
-}
-
-QSlider::add-page {
-    background: #e9eced;
-}
-
-QSlider::sub-page {
-    background: #6baef7;
-}</string>
+          <string notr="true"/>
          </property>
          <property name="value">
-          <number>50</number>
+          <number>10</number>
+         </property>
+         <property name="sliderPosition">
+          <number>10</number>
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="invertedAppearance">
-          <bool>false</bool>
-         </property>
-         <property name="invertedControls">
-          <bool>true</bool>
+         <property name="tickPosition">
+          <enum>QSlider::NoTicks</enum>
          </property>
         </widget>
         <widget class="AnimateColorLabel" name="animate_color_1">

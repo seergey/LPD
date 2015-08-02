@@ -51,7 +51,7 @@ public slots:
     void setLiquidModeSpeed(int value);
     void settingsProfileChanged(const QString &profileName);
     void setNumberOfLeds(int value);
-    void setCurrentColors(int colorCount, QColor *colors);
+    void moodLampColorsChanged();
 
 private slots:
     void updateColors();
@@ -72,9 +72,9 @@ private:
     int    m_liquidModeSpeed;
     bool   m_isSendDataOnlyIfColorsChanged;
 
-    QRgb m_rgbSaved;
+//    QRgb m_rgbSaved;
 
     int m_colorsMoodLampCount=0;
     int m_checkedColors[];
-    QColor m_colorsMoodLamp[];
+    QColor* m_colorsMoodLamp;
 };

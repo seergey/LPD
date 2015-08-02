@@ -22,6 +22,7 @@ public:
     void connectSignalSlots();
     void initWithDefaultValues();
     void createTrayIcon();
+    void updateTrayAndActionStates();
 
 
 private slots:
@@ -50,7 +51,6 @@ private slots:
     void backlightOn();
     void backlightOff();
     void profileTraySwitch(const QString newProfileName);
-    void updateTrayAndActionStates();
 
 signals:
     void backlightStatusChanged(Backlight::Status);

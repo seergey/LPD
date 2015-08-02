@@ -76,6 +76,7 @@ public:
     static void renameCurrentProfile(const QString & configName);
     static void removeCurrentProfile();
     static bool isProfileLoaded();
+    static bool isMoodlampColor(QColor color);
 
     static QString getCurrentProfileName();
     /*!
@@ -177,12 +178,19 @@ public:
     static void setLightpackMode(Lightpack::Mode mode);
     static bool isMoodLampLiquidMode();
     static void setMoodLampLiquidMode(bool isLiquidMode);
-    static QColor getMoodLampColor();
+    static QColor* getMoodLampColors();
+    static int getMoodLampColorsCount();
+
     static void setMoodLampColor(QColor color,
                                  QColor value2 = QColor(),
                                  QColor value3 = QColor(),
                                  QColor value4 = QColor(),
                                  QColor value5 = QColor());
+    static QColor getMoodLampColor1();
+    static QColor getMoodLampColor2();
+    static QColor getMoodLampColor3();
+    static QColor getMoodLampColor4();
+    static QColor getMoodLampColor5();
     static int getMoodLampSpeed();
     static void setMoodLampSpeed(int value);
 
@@ -278,7 +286,7 @@ signals:
     void dx1011GrabberEnabledChanged(const bool isEnabled);
     void lightpackModeChanged(const Lightpack::Mode mode);
     void moodLampLiquidModeChanged(bool isLiquidMode);
-    void moodLampColorChanged(const QColor* colors);
+    void moodLampColorsChanged();
     void moodLampSpeedChanged(int value);
     void ledCoefRedChanged(int ledIndex, double value);
     void ledCoefGreenChanged(int ledIndex, double value);

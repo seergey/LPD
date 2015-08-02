@@ -101,7 +101,6 @@ void LightpackApplication::initializeAll(const QString & appDirPath)
         bool trayAvailable = checkSystemTrayAvailability();
         m_settingsWindowNew = new SettingsWindowNew();
         m_settingsWindowNew->setVisible(true);
-        m_settingsWindowNew->initWithDefaultValues();
         m_settingsWindowNew->connectSignalSlots();
         m_settingsWindow = new SettingsWindow();
         if (trayAvailable) {
@@ -142,10 +141,11 @@ void LightpackApplication::initializeAll(const QString & appDirPath)
 
     if (!m_noGui)
     {
-        connect(m_settingsWindow, SIGNAL(backlightStatusChanged(Backlight::Status)), this, SLOT(setStatusChanged(Backlight::Status)));
+//        connect(m_settingsWindow, SIGNAL(backlightStatusChanged(Backlight::Status)), this, SLOT(setStatusChanged(Backlight::Status)));
         connect(m_settingsWindowNew, SIGNAL(backlightStatusChanged(Backlight::Status)), this, SLOT(setStatusChanged(Backlight::Status)));
-        m_settingsWindow->startBacklight();
+//        m_settingsWindowNew->startBacklight();
     }
+    m_settingsWindowNew->initWithDefaultValues();
 
     this->settingsChanged();
 
@@ -239,7 +239,7 @@ void LightpackApplication::startBacklight()
     DEBUG_LOW_LEVEL << Q_FUNC_INFO << "m_backlightStatus =" << m_backlightStatus
                     << "m_deviceLockStatus =" << m_deviceLockStatus;
 
-    connect(settings(), SIGNAL(moodLampColorChanged(QColor)), m_moodlampManager, SLOT(setCurrentColor(QColor)));
+    connect(settings(), SIGNAL(moodLampColorsChanged()), m_moodlampManager, SLOT(moodLampColorsChanged()));
     connect(settings(), SIGNAL(moodLampSpeedChanged(int)),    m_moodlampManager, SLOT(setLiquidModeSpeed(int)));
     connect(settings(), SIGNAL(moodLampLiquidModeChanged(bool)),    m_moodlampManager, SLOT(setLiquidMode(bool)));
 //    connect(settings(), SIGNAL(profileLoaded(const QString &)), m_moodlampManager, SLOT(settingsProfileChanged(const QString &)));
@@ -698,7 +698,7 @@ void LightpackApplication::settingsChanged()
 
     m_moodlampManager->setSendDataOnlyIfColorsChanged(Settings::isSendDataOnlyIfColorsChanges());
 
-    m_moodlampManager->setCurrentColor(Settings::getMoodLampColor());
+    m_moodlampManager->moodLampColorsChanged();
     m_moodlampManager->setLiquidModeSpeed(Settings::getMoodLampSpeed());
     m_moodlampManager->setLiquidMode(Settings::isMoodLampLiquidMode());
 

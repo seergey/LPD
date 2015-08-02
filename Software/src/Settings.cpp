@@ -478,6 +478,11 @@ bool Settings::isProfileLoaded()
     return m_currentProfile != NULL;
 }
 
+bool Settings::isMoodlampColor(QColor color)
+{
+    return color.isValid() && (color.red() + color.green() + color.blue() > 20);
+}
+
 QString Settings::getApplicationDirPath()
 {
     DEBUG_LOW_LEVEL << Q_FUNC_INFO << m_applicationDirPath;
@@ -1203,11 +1208,57 @@ void Settings::setMoodLampLiquidMode(bool value)
     m_this->moodLampLiquidModeChanged(value);
 }
 
-QColor Settings::getMoodLampColor()
+QColor* Settings::getMoodLampColors()
 {
     DEBUG_LOW_LEVEL << Q_FUNC_INFO;
-    return QColor(value(Profile::Key::MoodLamp::Color).toString());
+    QColor params[] = { QColor(value(Profile::Key::MoodLamp::Color).toString()),
+                        QColor(value(Profile::Key::MoodLamp::Color2).toString()),
+                        QColor(value(Profile::Key::MoodLamp::Color3).toString()),
+                        QColor(value(Profile::Key::MoodLamp::Color4).toString()),
+                        QColor(value(Profile::Key::MoodLamp::Color5).toString())
+                        };
+    int numColors = 0;
+    for (int i=0; i<5; i++){
+        if (isMoodlampColor(params[i])){
+            numColors++;
+        }
+    }
+
+    int idx = 0;
+    QColor* activeColors = new QColor [numColors];
+    for (int i=0; i<5; i++){
+        if (isMoodlampColor(params[i])){
+            activeColors[idx++] = params[i];
+            DEBUG_LOW_LEVEL << "Active Color("<< i <<"): " << activeColors[0].name();
+        }
+    }
+    DEBUG_LOW_LEVEL
+            << activeColors[0].name() << ","
+            << activeColors[1].name() << ","
+               << activeColors[2].name() << ","
+                  << activeColors[3].name() << ","
+                     << activeColors[4].name() << ",";
+    return activeColors;
 }
+
+int Settings::getMoodLampColorsCount()
+{
+    DEBUG_LOW_LEVEL << Q_FUNC_INFO;
+    QColor params[] = { QColor(value(Profile::Key::MoodLamp::Color).toString()),
+                        QColor(value(Profile::Key::MoodLamp::Color2).toString()),
+                        QColor(value(Profile::Key::MoodLamp::Color3).toString()),
+                        QColor(value(Profile::Key::MoodLamp::Color4).toString()),
+                        QColor(value(Profile::Key::MoodLamp::Color5).toString())
+                        };
+    int numColors = 0;
+    for (int i=0; i<5; i++){
+        if (isMoodlampColor(params[i])){
+            numColors++;
+        }
+    }
+    return numColors;
+}
+
 
 void Settings::setMoodLampColor(QColor value,
                                 QColor value2,
@@ -1221,22 +1272,33 @@ void Settings::setMoodLampColor(QColor value,
     setValue(Profile::Key::MoodLamp::Color3, value3.name() );
     setValue(Profile::Key::MoodLamp::Color4, value4.name() );
     setValue(Profile::Key::MoodLamp::Color5, value5.name() );
-    int numColors = 0;
-    QColor params[] = {value, value2, value3, value4, value5};
-    for (int i=0; i<5; i++){
-        if (params[i].isValid()){
-            numColors++;
-        }
-    }
-    int idx = 0;
-    QColor activeColors [numColors];
-    for (int i=0; i<5; i++){
-        if (params[i].isValid()){
-           activeColors[idx++] = params[i];
-        }
-    }
 
-    m_this->moodLampColorChanged(activeColors);
+    m_this->moodLampColorsChanged();
+}
+
+QColor Settings::getMoodLampColor1()
+{
+    return QColor(value(Profile::Key::MoodLamp::Color).toString());
+}
+
+QColor Settings::getMoodLampColor2()
+{
+    return QColor(value(Profile::Key::MoodLamp::Color2).toString());
+}
+
+QColor Settings::getMoodLampColor3()
+{
+    return QColor(value(Profile::Key::MoodLamp::Color3).toString());
+}
+
+QColor Settings::getMoodLampColor4()
+{
+    return QColor(value(Profile::Key::MoodLamp::Color4).toString());
+}
+
+QColor Settings::getMoodLampColor5()
+{
+    return QColor(value(Profile::Key::MoodLamp::Color5).toString());
 }
 
 int Settings::getMoodLampSpeed()
