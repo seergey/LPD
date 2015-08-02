@@ -25,19 +25,19 @@ void SettingsWindowNew::connectSignalSlots()
     connect(ui->grabbing_settings_button, SIGNAL(clicked(bool)), this, SLOT(showGrabbingSettings()));
     connect(ui->commonSettingsButton, SIGNAL(clicked(bool)), this, SLOT(showCommonSettings()));
     connect(ui->backlightSettingsButton, SIGNAL(clicked(bool)), this, SLOT(showBacklightSettings()));
-    connect(ui->minimum_brightness_slider, SIGNAL(valueChanged(int)), this, SLOT(minimumBrightnessChanged(int)));
+    connect(ui->minimum_brightness_slider, SIGNAL(sliderReleased()), this, SLOT(minimumBrightnessChanged()));
     connect(ui->minimum_brightness_spinbox, SIGNAL(valueChanged(int)), this, SLOT(minimumBrightnessChanged(int)));
 
-    connect(ui->general_brightness_slider, SIGNAL(valueChanged(int)), this, SLOT(generalBrightnessChanged(int)));
+    connect(ui->general_brightness_slider, SIGNAL(sliderReleased()), this, SLOT(generalBrightnessChanged()));
     connect(ui->general_brightness_spinbox, SIGNAL(valueChanged(int)), this, SLOT(generalBrightnessChanged(int)));
 
-    connect(ui->screen_capturing_frequency_slider, SIGNAL(valueChanged(int)), this, SLOT(screenCapturingFrequency(int)));
+    connect(ui->screen_capturing_frequency_slider, SIGNAL(sliderReleased()), this, SLOT(screenCapturingFrequency()));
     connect(ui->screen_capturing_frequency_spinbox, SIGNAL(valueChanged(int)), this, SLOT(screenCapturingFrequency(int)));
 
-    connect(ui->smoothness_slider, SIGNAL(valueChanged(int)), this, SLOT(smoothness(int)));
+    connect(ui->smoothness_slider, SIGNAL(sliderReleased()), this, SLOT(smoothness()));
     connect(ui->smoothness_spinbox, SIGNAL(valueChanged(int)), this, SLOT(smoothness(int)));
 
-    connect(ui->gamma_correction_slider, SIGNAL(valueChanged(int)), this, SLOT(gammaCorrectionInt(int)));
+    connect(ui->gamma_correction_slider, SIGNAL(sliderReleased()), this, SLOT(gammaCorrectionInt()));
     connect(ui->gamma_correction_spinbox, SIGNAL(valueChanged(double)), this, SLOT(gammaCorrectionDouble(double)));
 
     connect(ui->keep_lights_on_after_lock_checkbox, SIGNAL(stateChanged(int)), this, SLOT(keepLightsOnAfterLock(int)));
@@ -49,7 +49,7 @@ void SettingsWindowNew::connectSignalSlots()
     connect(ui->profile_combobox, SIGNAL(currentIndexChanged(int)), this, SLOT(profileChanged(int)));
 
     connect(ui->animate_check_box, SIGNAL(stateChanged(int)), this, SLOT(animate(int)));
-    connect(ui->animation_speed_slider, SIGNAL(valueChanged(int)), this, SLOT(animateSpeedChanged(int)));
+    connect(ui->animation_speed_slider, SIGNAL(sliderReleased()), this, SLOT(animateSpeedChanged()));
     connect(ui->animate_color_1, SIGNAL(Color_Changed(QColor)), this, SLOT(moodLampColorChanged()));
     connect(ui->animate_color_2, SIGNAL(Color_Changed(QColor)), this, SLOT(moodLampColorChanged()));
     connect(ui->animate_color_3, SIGNAL(Color_Changed(QColor)), this, SLOT(moodLampColorChanged()));
@@ -137,6 +137,15 @@ void SettingsWindowNew::showBacklightSettings()
     Settings::setLightpackMode(Lightpack::MoodLampMode);
     setMode(2);
 }
+void SettingsWindowNew::generalBrightnessChanged()
+{
+    generalBrightnessChanged(ui->general_brightness_slider->value());
+}
+
+void SettingsWindowNew::minimumBrightnessChanged()
+{
+    minimumBrightnessChanged(ui->minimum_brightness_slider->value());
+}
 
 void SettingsWindowNew::generalBrightnessChanged(int newValue)
 {
@@ -159,6 +168,11 @@ void SettingsWindowNew::minimumBrightnessModeChanged(bool)
     Settings::setMinimumLuminosityEnabled(ui->min_brightness_type_lumosity->isChecked());
 }
 
+void SettingsWindowNew::screenCapturingFrequency()
+{
+    screenCapturingFrequency(ui->screen_capturing_frequency_slider->value());
+}
+
 void SettingsWindowNew::screenCapturingFrequency(int newValue)
 {
     synchronizeValues(ui->screen_capturing_frequency_slider,
@@ -167,8 +181,9 @@ void SettingsWindowNew::screenCapturingFrequency(int newValue)
     Settings::setGrabSlowdown(newValue);
 }
 
-void SettingsWindowNew::gammaCorrectionInt(int newValue)
+void SettingsWindowNew::gammaCorrectionInt()
 {
+    int newValue = ui->gamma_correction_slider->value();
     int oldIntValue = ui->gamma_correction_spinbox->value() * 20.0;
     if (oldIntValue != newValue){
         double newDoubleValue = newValue/20.0;
@@ -184,6 +199,11 @@ void SettingsWindowNew::gammaCorrectionDouble(double newValue)
         ui->gamma_correction_slider->setValue(newIntValue);
         Settings::setDeviceGamma(newValue);
     }
+}
+
+void SettingsWindowNew::smoothness()
+{
+    smoothness(ui->smoothness_slider->value());
 }
 
 void SettingsWindowNew::smoothness(int newValue)
@@ -246,9 +266,10 @@ void SettingsWindowNew::animate(int state)
     Settings::setMoodLampLiquidMode(state == 2);
 }
 
-void SettingsWindowNew::animateSpeedChanged(int value)
+void SettingsWindowNew::animateSpeedChanged()
 {
-    Settings::setMoodLampSpeed(value);
+
+    Settings::setMoodLampSpeed(ui->animation_speed_slider->value());
 }
 
 void SettingsWindowNew::moodLampColorChanged()
