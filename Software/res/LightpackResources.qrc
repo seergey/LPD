@@ -44,5 +44,11 @@
         <file>icons/settings_icon_white.png</file>
         <file>icons/shutdown_icon_gray.png</file>
         <file>icons/shutdown_icon_white.png</file>
+        <file>img/andromeda.png</file>
+        <file>img/andromeda_selected.png</file>
+        <file>img/cassiopeia.png</file>
+        <file>img/cassiopeia_selected.png</file>
+        <file>img/pegasus.png</file>
+        <file>img/pegasus_selected.png</file>
     </qresource>
 </RCC>

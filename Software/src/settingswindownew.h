@@ -55,10 +55,12 @@ private slots:
     void backlightOn();
     void backlightOff();
     void profileTraySwitch(const QString newProfileName);
+    void setupWidgetsClicked();
 
 signals:
     void backlightStatusChanged(Backlight::Status);
     void switchOffLeds();
+    void setLedWidgets(bool);
 
 private:
     Ui::SettingsWindowNew *ui;

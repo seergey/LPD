@@ -20,11 +20,11 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Prismatik</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QSlider::groove:horizontal {
-	height:2px;
+	height:3px;
 	background-color:gray
 }
 
@@ -293,7 +293,14 @@ TogglableCustomButton:hover{
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:white;</string>
+        <string notr="true">#settingsWidget{
+padding:10px;
+}
+
+*{
+padding:0px;
+background-color:white;
+}</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::Box</enum>
@@ -302,41 +309,14 @@ TogglableCustomButton:hover{
         <number>1</number>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="common_settings">
-        <widget class="QPushButton" name="pushButton_6">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>191</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton{ 
-color:white;
-border: 0;
-background-color:#478fde;
-}
-QPushButton:focus:pressed  { 
-background-color:#98c9ff;
- }
-QPushButton:hover{ 
-background-color: #6baef7; 
-
-}</string>
-         </property>
-         <property name="text">
-          <string>Setup widgets</string>
-         </property>
-        </widget>
         <widget class="QLabel" name="label">
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>56</y>
+           <y>7</y>
            <width>141</width>
            <height>20</height>
           </rect>
@@ -349,7 +329,7 @@ background-color: #6baef7;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>125</y>
+           <y>76</y>
            <width>151</width>
            <height>21</height>
           </rect>
@@ -362,9 +342,9 @@ background-color: #6baef7;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>80</y>
-           <width>350</width>
-           <height>40</height>
+           <y>31</y>
+           <width>400</width>
+           <height>20</height>
           </rect>
          </property>
          <property name="orientation">
@@ -375,9 +355,9 @@ background-color: #6baef7;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>150</y>
-           <width>350</width>
-           <height>40</height>
+           <y>101</y>
+           <width>400</width>
+           <height>20</height>
           </rect>
          </property>
          <property name="orientation">
@@ -387,8 +367,8 @@ background-color: #6baef7;
         <widget class="QSpinBox" name="general_brightness_spinbox">
          <property name="geometry">
           <rect>
-           <x>370</x>
-           <y>90</y>
+           <x>420</x>
+           <y>41</y>
            <width>42</width>
            <height>22</height>
           </rect>
@@ -397,8 +377,8 @@ background-color: #6baef7;
         <widget class="QSpinBox" name="minimum_brightness_spinbox">
          <property name="geometry">
           <rect>
-           <x>370</x>
-           <y>160</y>
+           <x>420</x>
+           <y>111</y>
            <width>42</width>
            <height>22</height>
           </rect>
@@ -408,7 +388,7 @@ background-color: #6baef7;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>180</y>
+           <y>131</y>
            <width>55</width>
            <height>16</height>
           </rect>
@@ -421,10 +401,13 @@ background-color: #6baef7;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>200</y>
+           <y>160</y>
            <width>191</width>
-           <height>80</height>
+           <height>41</height>
           </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border:0</string>
          </property>
          <property name="title">
           <string/>
@@ -432,9 +415,9 @@ background-color: #6baef7;
          <widget class="QRadioButton" name="min_brightness_type_dead_zone">
           <property name="geometry">
            <rect>
-            <x>20</x>
-            <y>40</y>
-            <width>201</width>
+            <x>10</x>
+            <y>20</y>
+            <width>161</width>
             <height>20</height>
            </rect>
           </property>
@@ -445,9 +428,9 @@ background-color: #6baef7;
          <widget class="QRadioButton" name="min_brightness_type_lumosity">
           <property name="geometry">
            <rect>
-            <x>20</x>
-            <y>20</y>
-            <width>191</width>
+            <x>10</x>
+            <y>0</y>
+            <width>161</width>
             <height>20</height>
            </rect>
           </property>
@@ -462,7 +445,7 @@ background-color: #6baef7;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>10</y>
+           <y>80</y>
            <width>201</width>
            <height>21</height>
           </rect>
@@ -475,7 +458,7 @@ background-color: #6baef7;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>90</y>
+           <y>140</y>
            <width>161</width>
            <height>21</height>
           </rect>
@@ -488,7 +471,7 @@ background-color: #6baef7;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>150</y>
+           <y>200</y>
            <width>161</width>
            <height>21</height>
           </rect>
@@ -501,7 +484,7 @@ background-color: #6baef7;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>210</y>
+           <y>260</y>
            <width>161</width>
            <height>21</height>
           </rect>
@@ -514,9 +497,9 @@ background-color: #6baef7;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>40</y>
-           <width>431</width>
-           <height>19</height>
+           <y>110</y>
+           <width>400</width>
+           <height>20</height>
           </rect>
          </property>
          <property name="maximum">
@@ -539,9 +522,9 @@ background-color: #6baef7;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>120</y>
-           <width>431</width>
-           <height>19</height>
+           <y>170</y>
+           <width>400</width>
+           <height>20</height>
           </rect>
          </property>
          <property name="maximum">
@@ -567,9 +550,9 @@ background-color: #6baef7;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>180</y>
-           <width>431</width>
-           <height>19</height>
+           <y>230</y>
+           <width>400</width>
+           <height>20</height>
           </rect>
          </property>
          <property name="orientation">
@@ -579,8 +562,8 @@ background-color: #6baef7;
         <widget class="QSpinBox" name="screen_capturing_frequency_spinbox">
          <property name="geometry">
           <rect>
-           <x>450</x>
-           <y>40</y>
+           <x>420</x>
+           <y>110</y>
            <width>71</width>
            <height>22</height>
           </rect>
@@ -604,8 +587,8 @@ background-color: #6baef7;
         <widget class="QSpinBox" name="smoothness_spinbox">
          <property name="geometry">
           <rect>
-           <x>450</x>
-           <y>180</y>
+           <x>420</x>
+           <y>230</y>
            <width>42</width>
            <height>22</height>
           </rect>
@@ -615,7 +598,7 @@ background-color: #6baef7;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>240</y>
+           <y>290</y>
            <width>131</width>
            <height>20</height>
           </rect>
@@ -628,7 +611,7 @@ background-color: #6baef7;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>270</y>
+           <y>320</y>
            <width>111</width>
            <height>20</height>
           </rect>
@@ -640,8 +623,8 @@ background-color: #6baef7;
         <widget class="QDoubleSpinBox" name="gamma_correction_spinbox">
          <property name="geometry">
           <rect>
-           <x>450</x>
-           <y>120</y>
+           <x>420</x>
+           <y>170</y>
            <width>62</width>
            <height>22</height>
           </rect>
@@ -654,6 +637,36 @@ background-color: #6baef7;
          </property>
          <property name="value">
           <double>1.000000000000000</double>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="setup_widgets_button">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>191</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{ 
+color:white;
+border: 0;
+background-color:#478fde;
+}
+QPushButton:focus:pressed  { 
+background-color:#98c9ff;
+ }
+QPushButton:hover{ 
+background-color: #6baef7; 
+
+}</string>
+         </property>
+         <property name="text">
+          <string>Setup widgets</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
          </property>
         </widget>
        </widget>
@@ -675,7 +688,7 @@ background-color: #6baef7;
          <property name="geometry">
           <rect>
            <x>30</x>
-           <y>90</y>
+           <y>100</y>
            <width>81</width>
            <height>20</height>
           </rect>
@@ -695,8 +708,8 @@ background-color: #6baef7;
           <rect>
            <x>30</x>
            <y>150</y>
-           <width>371</width>
-           <height>31</height>
+           <width>400</width>
+           <height>20</height>
           </rect>
          </property>
          <property name="sizePolicy">

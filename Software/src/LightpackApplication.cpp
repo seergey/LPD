@@ -645,8 +645,10 @@ void LightpackApplication::initGrabManager()
     {
 //        connect(m_settingsWindow, SIGNAL(settingsChanged()), this, SLOT(settingsChanged()));
 
-        connect(m_settingsWindow, SIGNAL(showLedWidgets(bool)), this, SLOT(showLedWidgets(bool)));
-        connect(m_settingsWindow, SIGNAL(setColoredLedWidget(bool)), this, SLOT(setColoredLedWidget(bool)));
+//        connect(m_settingsWindow, SIGNAL(showLedWidgets(bool)), this, SLOT(showLedWidgets(bool)));
+//        connect(m_settingsWindow, SIGNAL(setColoredLedWidget(bool)), this, SLOT(setColoredLedWidget(bool)));
+
+        connect(m_settingsWindowNew, SIGNAL(setLedWidgets(bool)), this, SLOT(showLedWidgets(bool)));
 
         // GrabManager to this
         connect(m_grabManager, SIGNAL(ambilightTimeOfUpdatingColors(double)), m_settingsWindow, SLOT(refreshAmbilightEvaluated(double)));

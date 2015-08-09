@@ -47,6 +47,7 @@ void SettingsWindowNew::connectSignalSlots()
     connect(ui->min_brightness_type_lumosity, SIGNAL(toggled(bool)), this, SLOT(minimumBrightnessModeChanged(bool)));
 
     connect(ui->profile_combobox, SIGNAL(currentIndexChanged(int)), this, SLOT(profileChanged(int)));
+    connect(ui->setup_widgets_button, SIGNAL(clicked()), this, SLOT(setupWidgetsClicked()));
 
     connect(ui->animate_check_box, SIGNAL(stateChanged(int)), this, SLOT(animate(int)));
     connect(ui->animation_speed_slider, SIGNAL(sliderReleased()), this, SLOT(animateSpeedChanged()));
@@ -108,6 +109,7 @@ void SettingsWindowNew::initWithDefaultValues()
     ui->animate_color_5->setColor(Settings::getMoodLampColor5());
 
     initProfilesCombo();
+    updateTrayAndActionStates();
 }
 
 
@@ -235,6 +237,7 @@ void SettingsWindowNew::setMode(int mode)
     ui->grabbing_settings_button->setActiveMode(mode);
     ui->backlightSettingsButton->setActiveMode(mode);
     emit backlightStatusChanged(mode==0 ? Backlight::StatusOff : Backlight::StatusOn);
+    updateTrayAndActionStates();
 }
 
 void SettingsWindowNew::profileChanged(int elementId)
@@ -327,6 +330,7 @@ void SettingsWindowNew::initProfilesCombo()
         idx = 2;
     }
     ui->profile_combobox->setCurrentIndex(idx);
+    this->setWindowTitle("Prismatik: " + Settings::getCurrentProfileName());
     connect(ui->profile_combobox, SIGNAL(currentIndexChanged(int)), this, SLOT(profileChanged(int)));
 
 }
@@ -370,27 +374,46 @@ void SettingsWindowNew::quit()
 
 void SettingsWindowNew::showSettings()
 {
-
+    show();
 }
 
 void SettingsWindowNew::toggleSettings()
 {
-
+    if (this->isVisible()){
+        hide();
+    } else {
+        show();
+    }
 }
 
 void SettingsWindowNew::backlightOn()
 {
-
+    if (Settings::getLightpackMode() == Lightpack::AmbilightMode){
+        setMode(1);
+    } else {
+        setMode(2);
+    }
 }
 
 void SettingsWindowNew::backlightOff()
 {
-
+    setMode(0);
 }
 
 void SettingsWindowNew::profileTraySwitch(const QString newProfileName)
 {
+    int idx = ui->profile_combobox->findText(newProfileName);
+    if (idx <=0){
+        idx=2;
+    }
+    profileChanged(idx);
+}
 
+void SettingsWindowNew::setupWidgetsClicked()
+{
+
+    bool checked = ui->setup_widgets_button->isChecked();
+    emit setLedWidgets(checked);
 }
 
 void SettingsWindowNew::updateTrayAndActionStates()

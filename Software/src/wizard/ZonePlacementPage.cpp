@@ -34,7 +34,7 @@
 #include "PegasusDistributor.hpp"
 #include "GrabAreaWidget.hpp"
 #include "LedDeviceLightpack.hpp"
-
+#include "distributorlabel.h"
 
 ZonePlacementPage::ZonePlacementPage(bool isInitFromSettings, TransientSettings *ts, QWidget *parent):
     QWizardPage(parent),
@@ -47,6 +47,9 @@ ZonePlacementPage::ZonePlacementPage(bool isInitFromSettings, TransientSettings 
 
     _x0 = screen.left() + 150;
     _y0 = screen.top() + 150;
+    connect(_ui->andromedaLabel, SIGNAL(clicked()), this, SLOT(on_pbAndromeda_clicked()));
+    connect(_ui->cassiopeiaLabel, SIGNAL(clicked()), this, SLOT(on_pbCassiopeia_clicked()));
+    connect(_ui->pegasusLabel, SIGNAL(clicked()), this, SLOT(on_pbPegasus_clicked()));
 
     resetNewAreaRect();
 }
@@ -68,7 +71,7 @@ void ZonePlacementPage::initializePage()
     _screenId = field("screenId").toInt();
     registerField("numberOfLeds", _ui->sbNumberOfLeds);
 
-    device()->setSmoothSlowdown(70);
+    device()->setSmoothSlowdown(700);
 
     _ui->sbNumberOfLeds->setMaximum(device()->maxLedsCount());
 
@@ -209,6 +212,8 @@ void ZonePlacementPage::removeLastGrabArea()
 
 void ZonePlacementPage::on_pbAndromeda_clicked()
 {
+    _ui->cassiopeiaLabel->unselect();
+    _ui->pegasusLabel->unselect();
     AndromedaDistributor *andromeda = new AndromedaDistributor(_screenId, true, _ui->sbNumberOfLeds->value());
 
     distributeAreas(andromeda);
@@ -219,6 +224,8 @@ void ZonePlacementPage::on_pbAndromeda_clicked()
 
 void ZonePlacementPage::on_pbCassiopeia_clicked()
 {
+    _ui->andromedaLabel->unselect();
+    _ui->pegasusLabel->unselect();
     CassiopeiaDistributor *cassiopeia = new CassiopeiaDistributor(_screenId, _ui->sbNumberOfLeds->value());
 
     distributeAreas(cassiopeia);
@@ -228,6 +235,8 @@ void ZonePlacementPage::on_pbCassiopeia_clicked()
 
 void ZonePlacementPage::on_pbPegasus_clicked()
 {
+    _ui->andromedaLabel->unselect();
+    _ui->cassiopeiaLabel->unselect();
     PegasusDistributor *pegasus = new PegasusDistributor(_screenId, _ui->sbNumberOfLeds->value());
 
     distributeAreas(pegasus);
