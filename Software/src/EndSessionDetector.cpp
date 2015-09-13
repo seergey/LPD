@@ -46,6 +46,7 @@ bool EndSessionDetector::nativeEventFilter(const QByteArray& eventType, void* me
 
 	if (msg->message == WM_QUERYENDSESSION)
 	{
+       qWarning() << "WM_QUERYENDSESSION";
 		if (!SettingsScope::Settings::isKeepLightsOnAfterExit())
 		{
 			Destroy();
@@ -54,6 +55,8 @@ bool EndSessionDetector::nativeEventFilter(const QByteArray& eventType, void* me
 	}
 	else if (msg->message == WM_WTSSESSION_CHANGE)
 	{
+        qWarning() << "WM_WTSSESSION_CHANGE";
+
 		if (!SettingsScope::Settings::isKeepLightsOnAfterLock())
 		{
 			if (msg->wParam == WTS_SESSION_LOCK)
@@ -65,7 +68,22 @@ bool EndSessionDetector::nativeEventFilter(const QByteArray& eventType, void* me
 				isSessionResuming = true;
 			}
 		}
-	}
+    } else if (msg->message == WM_POWERBROADCAST){
+
+        if (!SettingsScope::Settings::isKeepLightsOnAfterLock())
+        {
+            if (msg->wParam == PBT_APMSTANDBY || msg->wParam == PBT_APMSUSPEND)
+            {
+                isSessionEnding = true;
+            }
+            else if (msg->wParam == PBT_APMRESUMESUSPEND
+                     || msg->wParam == PBT_APMRESUMESTANDBY)
+            {
+                isSessionResuming = true;
+            }
+        }
+
+    }
 #endif
 
 	if (isSessionEnding)

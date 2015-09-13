@@ -348,6 +348,7 @@ bool LedDeviceLightpack::writeBufferToDevice(int command, hid_device *phid_devic
     int error = hid_write(phid_device, m_writeBuffer, sizeof(m_writeBuffer));
     if (error < 0)
     {
+        qWarning() << "HID Error: " << QString::fromWCharArray(hid_error (phid_device));
         // Trying to repeat sending data:
         error = hid_write(phid_device, m_writeBuffer, sizeof(m_writeBuffer));
         if(error < 0){
@@ -407,18 +408,14 @@ bool LedDeviceLightpack::writeBufferToDeviceWithCheck(int command, hid_device *p
         {
             if (!writeBufferToDevice(command, phid_device))
             {
-                if (tryToReopenDevice())
-                    return writeBufferToDevice(command, phid_device);
-                else
-                    return false;
+                tryToReopenDevice();
+                return false;
             }
         }
         return true;
     } else {
-        if (tryToReopenDevice())
-            return writeBufferToDevice(command, phid_device);
-        else
-            return false;
+        tryToReopenDevice();
+        return false;
     }
 }
 

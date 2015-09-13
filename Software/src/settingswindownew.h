@@ -61,6 +61,7 @@ private slots:
 signals:
     void backlightStatusChanged(Backlight::Status);
     void switchOffLeds();
+    void switchOnLeds();
     void setLedWidgets(bool);
 
 private:

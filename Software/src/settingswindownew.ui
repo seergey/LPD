@@ -317,7 +317,7 @@ background-color:white;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>76</y>
+           <y>6</y>
            <width>141</width>
            <height>20</height>
           </rect>
@@ -330,7 +330,7 @@ background-color:white;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>145</y>
+           <y>75</y>
            <width>151</width>
            <height>21</height>
           </rect>
@@ -343,7 +343,7 @@ background-color:white;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>100</y>
+           <y>30</y>
            <width>400</width>
            <height>20</height>
           </rect>
@@ -356,7 +356,7 @@ background-color:white;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>170</y>
+           <y>100</y>
            <width>400</width>
            <height>20</height>
           </rect>
@@ -369,7 +369,7 @@ background-color:white;
          <property name="geometry">
           <rect>
            <x>420</x>
-           <y>110</y>
+           <y>30</y>
            <width>42</width>
            <height>22</height>
           </rect>
@@ -379,7 +379,7 @@ background-color:white;
          <property name="geometry">
           <rect>
            <x>420</x>
-           <y>180</y>
+           <y>100</y>
            <width>42</width>
            <height>22</height>
           </rect>
@@ -389,7 +389,7 @@ background-color:white;
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>200</y>
+           <y>130</y>
            <width>55</width>
            <height>16</height>
           </rect>
@@ -401,8 +401,8 @@ background-color:white;
         <widget class="QGroupBox" name="groupBox">
          <property name="geometry">
           <rect>
-           <x>10</x>
-           <y>229</y>
+           <x>0</x>
+           <y>150</y>
            <width>191</width>
            <height>41</height>
           </rect>
@@ -443,10 +443,10 @@ background-color:white;
         <widget class="QPushButton" name="start_wizard_button">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>530</x>
            <y>10</y>
-           <width>201</width>
-           <height>41</height>
+           <width>151</width>
+           <height>61</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -464,10 +464,50 @@ background-color: #6baef7;
 }</string>
          </property>
          <property name="text">
-          <string>Start configuration wizard</string>
+          <string>Start configuration 
+wizard</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_7">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>220</y>
+           <width>161</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Keep lights on after</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="keep_lights_on_after_exit_checkbox">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>280</y>
+           <width>111</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Exit Prismatik</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="keep_lights_on_after_lock_checkbox">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>250</y>
+           <width>131</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Lock computer</string>
          </property>
         </widget>
        </widget>
@@ -509,19 +549,6 @@ background-color: #6baef7;
          </property>
          <property name="text">
           <string>Smoothness</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_7">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>260</y>
-           <width>161</width>
-           <height>21</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Keep lights on after</string>
          </property>
         </widget>
         <widget class="QSlider" name="screen_capturing_frequency_slider">
@@ -623,32 +650,6 @@ background-color: #6baef7;
            <width>42</width>
            <height>22</height>
           </rect>
-         </property>
-        </widget>
-        <widget class="QCheckBox" name="keep_lights_on_after_lock_checkbox">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>290</y>
-           <width>131</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Lock computer</string>
-         </property>
-        </widget>
-        <widget class="QCheckBox" name="keep_lights_on_after_exit_checkbox">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>320</y>
-           <width>111</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Exit Prismatik</string>
          </property>
         </widget>
         <widget class="QDoubleSpinBox" name="gamma_correction_spinbox">

@@ -52,7 +52,7 @@ public:
     bool winEventFilter ( MSG * msg, long * result );
     HWND getMainWindowHandle();
 #endif
-    SettingsWindow * settingsWnd() { return m_settingsWindow; }
+    SettingsWindowNew * settingsWnd() { return m_settingsWindowNew; }
     const SettingsScope::Settings * settings() { return SettingsScope::Settings::settingsSingleton(); }
     enum ErrorCodes {
         OK_ErrorCode                            = 0,
@@ -105,7 +105,7 @@ public:
     QMutex m_mutex;
 
 private:
-    SettingsWindow *m_settingsWindow;
+//    SettingsWindow *m_settingsWindow;
     SettingsWindowNew* m_settingsWindowNew;
     ApiServer *m_apiServer;
     LedDeviceManager *m_ledDeviceManager;
