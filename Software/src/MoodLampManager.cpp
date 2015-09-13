@@ -80,6 +80,11 @@ void MoodLampManager::moodLampColorsChanged()
     m_colorsMoodLamp = Settings::getMoodLampColors();
     m_colorsMoodLampCount = Settings::getMoodLampColorsCount();
 
+    if (m_colorsMoodLampCount == 0){
+        fillColors(QRgb());
+        emit updateLedsColors(m_colors);
+    }
+
     if (m_isMoodLampEnabled && (m_isLiquidMode == false) && m_colorsMoodLampCount > 0)
     {
         fillColors(m_colorsMoodLamp[0].rgb());
@@ -181,6 +186,8 @@ void MoodLampManager::updateColors()
     {
         if (m_colorsMoodLampCount > 0)
             rgb = m_colorsMoodLamp[0].rgb();
+        else
+            rgb = qRgb(0, 0, 0);
     }
 
 //    if (m_isSendDataOnlyIfColorsChanged == false)

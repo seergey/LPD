@@ -14,7 +14,7 @@
    <string>WizardPage</string>
   </property>
   <property name="title">
-   <string>Lightpacks discovery</string>
+   <string/>
   </property>
   <property name="subTitle">
    <string/>

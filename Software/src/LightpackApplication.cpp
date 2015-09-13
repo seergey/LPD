@@ -584,8 +584,8 @@ void LightpackApplication::startLedDeviceManager()
     if (!m_noGui)
     {
         connect(m_settingsWindow, SIGNAL(requestFirmwareVersion()),       m_ledDeviceManager, SLOT(requestFirmwareVersion()), Qt::QueuedConnection);
-        connect(m_settingsWindow, SIGNAL(switchOffLeds()),                m_ledDeviceManager, SLOT(switchOffLeds()), Qt::QueuedConnection);
-        connect(m_settingsWindow, SIGNAL(switchOnLeds()),                 m_ledDeviceManager, SLOT(switchOnLeds()), Qt::QueuedConnection);
+        connect(m_settingsWindowNew, SIGNAL(switchOffLeds()),                m_ledDeviceManager, SLOT(switchOffLeds()), Qt::QueuedConnection);
+        connect(m_settingsWindowNew, SIGNAL(switchOnLeds()),                 m_ledDeviceManager, SLOT(switchOnLeds()), Qt::QueuedConnection);
         connect(m_ledDeviceManager, SIGNAL(openDeviceSuccess(bool)),    m_settingsWindow, SLOT(ledDeviceOpenSuccess(bool)), Qt::QueuedConnection);
         connect(m_ledDeviceManager, SIGNAL(ioDeviceSuccess(bool)),      m_settingsWindow, SLOT(ledDeviceCallSuccess(bool)), Qt::QueuedConnection);
         connect(m_ledDeviceManager, SIGNAL(firmwareVersion(QString)),   m_settingsWindow, SLOT(ledDeviceFirmwareVersionResult(QString)), Qt::QueuedConnection);

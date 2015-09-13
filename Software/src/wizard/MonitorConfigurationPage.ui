@@ -14,7 +14,7 @@
    <string>WizardPage</string>
   </property>
   <property name="title">
-   <string>Choose monitor</string>
+   <string/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="3" column="1">

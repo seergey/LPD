@@ -2,6 +2,10 @@
 #include "ui_settingswindownew.h"
 #include "Settings.hpp"
 #include <QInputDialog>
+#include "LightpackApplication.hpp"
+
+
+#define getLightpackApp() static_cast<LightpackApplication *>(QCoreApplication::instance())
 
 using namespace SettingsScope;
 
@@ -56,7 +60,7 @@ void SettingsWindowNew::connectSignalSlots()
     connect(ui->animate_color_3, SIGNAL(Color_Changed(QColor)), this, SLOT(moodLampColorChanged()));
     connect(ui->animate_color_4, SIGNAL(Color_Changed(QColor)), this, SLOT(moodLampColorChanged()));
     connect(ui->animate_color_5, SIGNAL(Color_Changed(QColor)), this, SLOT(moodLampColorChanged()));
-
+    connect(ui->start_wizard_button, SIGNAL(clicked()), this, SLOT(runConfigurationWizardClicked()));
 }
 
 void SettingsWindowNew::initWithDefaultValues()
@@ -414,6 +418,24 @@ void SettingsWindowNew::setupWidgetsClicked()
 
     bool checked = ui->setup_widgets_button->isChecked();
     emit setLedWidgets(checked);
+}
+
+void SettingsWindowNew::runConfigurationWizardClicked()
+{
+    getLightpackApp()->free();
+
+#ifdef Q_OS_WIN
+    QString cmdLine;
+    cmdLine.append("\"");
+    cmdLine.append(QApplication::applicationFilePath());
+    cmdLine.append("\"");
+    cmdLine.append(" --wizard");
+    QProcess::startDetached(cmdLine);
+#else
+    QProcess::startDetached(QApplication::applicationFilePath().append(" --wizard"));
+#endif
+
+    quit();
 }
 
 void SettingsWindowNew::updateTrayAndActionStates()

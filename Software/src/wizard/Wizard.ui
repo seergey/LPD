@@ -11,7 +11,58 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Wizard</string>
+   <string>Prismatik configuration</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWizard {
+background-color:white;
+}
+QComboBox{
+border:1px solid #d5d8dd;
+}
+
+QPushButton { 
+padding-left:20px;
+padding-right:20px;
+padding-top:10px;
+padding-bottom:10px;
+
+color:white;
+border: 0;
+background-color:#478fde;
+}
+QPushButton:!enabled{
+background-color:#d5d8dd;
+color:white;
+}
+
+QPushButton:focus:pressed  { 
+background-color:#98c9ff;
+ }
+QPushButton:hover{ 
+background-color: #6baef7; 
+}
+
+*{
+background-color:white;
+color: #6f7480;
+}
+*:!enabled{
+color:#d5d8dd;
+	font: 9pt &quot;Segoe UI&quot;;
+}</string>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
+  </property>
+  <property name="wizardStyle">
+   <enum>QWizard::ClassicStyle</enum>
+  </property>
+  <property name="titleFormat">
+   <enum>Qt::AutoText</enum>
   </property>
  </widget>
  <resources/>

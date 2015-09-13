@@ -56,6 +56,7 @@ private slots:
     void backlightOff();
     void profileTraySwitch(const QString newProfileName);
     void setupWidgetsClicked();
+    void runConfigurationWizardClicked();
 
 signals:
     void backlightStatusChanged(Backlight::Status);
