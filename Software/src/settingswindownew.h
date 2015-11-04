@@ -23,6 +23,7 @@ public:
     void initWithDefaultValues();
     void createTrayIcon();
     void updateTrayAndActionStates();
+    void showTrayMessage();
 
 
 private slots:

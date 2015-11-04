@@ -120,6 +120,9 @@ public:
     static QString getConnectedDeviceName();
     static void setConnectedDeviceName(const QString & deviceName);
     static QStringList getSupportedDevices();
+    static bool isNotFirstStart();
+    static void setIsNotFirstStart(const bool firstTime);
+
     static QKeySequence getHotkey(const QString &actionName);
     static void setHotkey(const QString &actionName, const QKeySequence &keySequence);
     static QString getAdalightSerialPortName();

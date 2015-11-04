@@ -76,6 +76,7 @@ static const bool IsExpertModeEnabledDefault = false;
 static const bool IsKeepLightsOnAfterExit = true;
 static const bool IsKeepLightsOnAfterLock = true;
 static const bool IsPingDeviceEverySecond = true;
+static const bool IsNotFirstStart = false;
 static const bool IsUpdateFirmwareMessageShown = false;
 static const QString ConnectedDeviceDefault = "Lightpack";
 static const QString SupportedDevices = SUPPORTED_DEVICES; /* comma separated values! */

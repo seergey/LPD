@@ -74,6 +74,7 @@ static const QString IsUpdateFirmwareMessageShown = "IsUpdateFirmwareMessageShow
 static const QString ConnectedDevice = "ConnectedDevice";
 static const QString SupportedDevices = "SupportedDevices";
 static const QString LastReadUpdateId = "LastReadUpdateId";
+static const QString IsNotFirstStart = "IsNotFirstStart";
 
 // [Hotkeys]
 namespace Hotkeys
@@ -260,6 +261,7 @@ bool Settings::Initialize( const QString & applicationDirPath, bool isDebugLevel
     setNewOptionMain(Main::Key::IsUpdateFirmwareMessageShown, Main::IsUpdateFirmwareMessageShown);
     setNewOptionMain(Main::Key::ConnectedDevice,        Main::ConnectedDeviceDefault);
     setNewOptionMain(Main::Key::SupportedDevices,       Main::SupportedDevices, true /* always rewrite this information to main config */);
+    setNewOptionMain(Main::Key::IsNotFirstStart,       Main::IsNotFirstStart);
     setNewOptionMain(Main::Key::Api::IsEnabled,         Main::Api::IsEnabledDefault);
     setNewOptionMain(Main::Key::Api::ListenOnlyOnLoInterface, Main::Api::ListenOnlyOnLoInterfaceDefault);
     setNewOptionMain(Main::Key::Api::Port,              Main::Api::PortDefault);
@@ -714,6 +716,16 @@ void Settings::setConnectedDeviceName(const QString & deviceName)
 QStringList Settings::getSupportedDevices()
 {
     return Main::SupportedDevices.split(',');
+}
+
+bool Settings::isNotFirstStart()
+{
+    return valueMain(Main::Key::IsNotFirstStart).toBool();
+}
+
+void Settings::setIsNotFirstStart(bool firstTime)
+{
+    setValueMain(Main::Key::IsNotFirstStart, firstTime);
 }
 
 QKeySequence Settings::getHotkey(const QString &actionName)

@@ -69,6 +69,8 @@ void MonitorConfigurationPage::initializePage()
 
         _monitorForms.append(monitorIdForm);
     }
+    this->raise();
+    this->activateWindow();
 }
 
 bool MonitorConfigurationPage::validatePage()

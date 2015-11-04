@@ -294,6 +294,7 @@ void SettingsWindowNew::onPostInit()
 {
     if (m_trayIcon)
         m_trayIcon->checkUpdate();
+    showTrayMessage();
 
 }
 
@@ -481,5 +482,13 @@ void SettingsWindowNew::updateTrayAndActionStates()
         break;
     }
 //    if (m_trayIcon)
-//        m_labelStatusIcon->setToolTip(m_trayIcon->toolTip());
+    //        m_labelStatusIcon->setToolTip(m_trayIcon->toolTip());
+}
+
+void SettingsWindowNew::showTrayMessage()
+{
+    if ((m_trayIcon != NULL) && !Settings::isNotFirstStart()) {
+        m_trayIcon->showMessage("Prismatik is running", "You can open Prismatik settings from the tray-icon menu");
+        Settings::setIsNotFirstStart(true);
+    }
 }
